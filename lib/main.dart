@@ -47,31 +47,31 @@ class _MyHomePageState extends State<MyHomePage> {
         '''
         コンテンツの詳細明記
         ''',
-        'https://github.com/osyakan',
-        'youtube-url',],
+        ['https://github.com/osyakan', 'youtube-url'],
+      ],
+      ['ヘビVR',
+        'assets/programmer.png',
+        '''
+        コンテンツの詳細明記
+        ''',
+        ['https://github.com/osyakan', 'youtube-url'],
+      ],
+      ['ハンドジェスチャアプリ',
+        'assets/programmer.png',
+        '''
+        コンテンツの詳細明記
+        ''',
+        ['https://github.com/osyakan', 'youtube-url'],
+      ],
       ['content title',
         'assets/programmer.png',
         '''
         コンテンツの詳細明記
         ''',
-        'https://github.com/osyakan',
-        'youtube-url',],
-      ['content title',
-        'assets/programmer.png',
-        '''
-        コンテンツの詳細明記
-        ''',
-        'https://github.com/osyakan',
-        'youtube-url',],
-      ['content title',
-        'assets/programmer.png',
-        '''
-        コンテンツの詳細明記
-        ''',
-        'https://github.com/osyakan',
-        'youtube-url',],
+        ['https://github.com/osyakan', 'youtube-url'],
+      ],
     ];
-    double agesize = screenWidth*0.03;
+    double agesize = screenWidth*0.02;
     double schoolnamesize = screenWidth*0.018;
     double detailsize = screenWidth*0.018;
     final _random = Random();
@@ -134,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: Table(
                         defaultVerticalAlignment: TableCellVerticalAlignment.top,
                         columnWidths: <int, TableColumnWidth>{
-                          0: FixedColumnWidth(screenWidth*0.1),
+                          0: FixedColumnWidth(screenWidth*0.13),
                           1: FixedColumnWidth(screenWidth*0.25),
                           2: FlexColumnWidth(),
                         },
@@ -162,7 +162,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                   Text("全国高等専門学校体育大会柔道競技の部団体3連覇(2020)",style: TextStyle(fontSize: detailsize),),
                                   Text("全国高等専門学校体育大会柔道競技の部個人準優勝(2020)",style: TextStyle(fontSize: detailsize),),
                                   url2link("https://www.gifu-nct.ac.jp/elec/deguchi/sotsuron/kusakabe.pdf", name:"卒業研究", urlsize: detailsize),
-                                  Text("はんげー",style: TextStyle(fontSize: detailsize),),
                                 ]
                               ),
                             ],
@@ -224,7 +223,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       // mainAxisAlignment: MainAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(i.value[0],style: TextStyle(fontSize: screenWidth*0.03,),),
+                        Text(i.value[0],style: TextStyle(fontSize: screenWidth*0.02,),),
                         Image.asset(i.value[1], fit: BoxFit.cover),
                       ]),
                 ));
@@ -240,7 +239,8 @@ class _MyHomePageState extends State<MyHomePage> {
 class SecondRoute extends StatelessWidget{
   // added
   SecondRoute(this.child_list);
-  List<String> child_list;
+  List child_list;
+
 
   // const SecondRoute({Key? key}) : super(key: key);
   @override
@@ -249,6 +249,8 @@ class SecondRoute extends StatelessWidget{
     // get screensize
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+
+    print(child_list[3]);
 
     return Scaffold(
       appBar: AppBar(
@@ -261,11 +263,12 @@ class SecondRoute extends StatelessWidget{
             margin: EdgeInsets.all(screenWidth*0.08),
             child: Column(
               children: [
-                Text(child_list[0]),
+                Text(child_list[0],style: TextStyle(fontSize: screenWidth*0.04,),),
                 Image.asset(child_list[1], fit: BoxFit.cover),
                 Text(child_list[2]),
-                if(child_list[3]!='')url2link(child_list[3]),
-                if(child_list[4]!='')url2link(child_list[4]),
+                Column(
+                  children: child_list[3].map<Widget>((String url)=>url2link(url)).toList(),
+                ),
               ],
             ),
           ),
