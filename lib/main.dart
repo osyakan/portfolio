@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'dart:math';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Kusakabe Kan's portfolio",
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.cyan,
       ),
       home: const MyHomePage(title: "Kusakabe Kan's portfolio"),
     );
@@ -42,50 +42,45 @@ class _MyHomePageState extends State<MyHomePage> {
 
     //コンテンツのタイトルと画像(Map型)
     List mycontents = [
-      ['title',
+      ['content title',
         'assets/programmer.png',
         '''
-        detail of the content
+        コンテンツの詳細明記
         ''',
-        'https://github.com/osyakan'],
-      ['1', 'assets/programmer.png',
+        'https://github.com/osyakan',
+        'youtube-url',],
+      ['content title',
+        'assets/programmer.png',
         '''
-        どこで生れたかとんと見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。
-        吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という人間中で一番獰悪な種族であったそうだ。
-        この書生というのは時々我々を捕えて煮て食うという話である。しかしその当時は何という考もなかったから別段恐しいとも
-        思わなかった。ただ彼の掌に載せられてスーと持ち上げられた時何だかフワフワした感じがあったばかりである。掌の上で少
-        し落ちついて書生の顔を見たのがいわゆる人間というものの見始であろう。この時妙なものだと思った感じが今でも残ってい
-        る。第一毛をもって装飾されべきはずの顔がつるつるしてまるで薬缶だ。その後猫にもだいぶ逢ったがこんな片輪には一度も
-        出会わした事がない。のみならず顔の真中があまりに突起している。そうしてその穴の中から時々ぷうぷうと煙を吹く。どう
-        も咽せぽくて実に弱った。これが人間の飲む煙草というものである事はようやくこの頃知った。
-　      この書生の掌の裏でしばらくはよい心持に坐っておったが、しばらくすると非常な速力で運転し始めた。書生が動くのか自分
-        だけが動くのか分らないが無暗に眼が廻る。胸が悪くなる。到底助からないと思っていると、どさりと音がして眼から火が出た。それまで
-は記憶しているがあとは何の事やらいくら考え出そうとしても分らない。
+        コンテンツの詳細明記
         ''',
-        'https://github.com/osyakan'],
-      ['2', 'assets/programmer.png', 'title2', 'datail2'],
-      ['3', 'assets/programmer.png', 'title3', 'datail3'],
-      ['4', 'assets/programmer.png', 'title4', 'datail4'],
-      ['4', 'assets/programmer.png', 'title5', 'datail5'],
-      ['4', 'assets/programmer.png', 'title6', 'datail6'],
-      ['4', 'assets/programmer.png', 'title7', 'datail7'],
-      ['4', 'assets/programmer.png', 'title8', 'datail8'],
-      ['4', 'assets/programmer.png', 'title9', 'datail9'],
-      ['4', 'assets/programmer.png', 'title10', 'datail10'],
-      ['4', 'assets/programmer.png', 'title11', 'datail11'],
-      ['4', 'assets/programmer.png', 'title12', 'datail12'],
-      ['4', 'assets/programmer.png', 'title13', 'datail13'],
+        'https://github.com/osyakan',
+        'youtube-url',],
+      ['content title',
+        'assets/programmer.png',
+        '''
+        コンテンツの詳細明記
+        ''',
+        'https://github.com/osyakan',
+        'youtube-url',],
+      ['content title',
+        'assets/programmer.png',
+        '''
+        コンテンツの詳細明記
+        ''',
+        'https://github.com/osyakan',
+        'youtube-url',],
     ];
     double agesize = screenWidth*0.03;
     double schoolnamesize = screenWidth*0.018;
     double detailsize = screenWidth*0.018;
+    final _random = Random();
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
             pinned: true,
             expandedHeight: screenHeight * 0.4,
-            backgroundColor: Colors.green,
             flexibleSpace: FlexibleSpaceBar(
               title: Text(
                     "Kusakabe Kan's portfolio",
@@ -112,21 +107,26 @@ class _MyHomePageState extends State<MyHomePage> {
               delegate: SliverChildListDelegate(
                 [
                   Container(
-                    decoration: BoxDecoration(color: Colors.green),
+                    // decoration: BoxDecoration(color: Colors.green),
                     // margin: EdgeInsets.all(screenWidth*0.08),
                     child: Container(
                       margin: EdgeInsets.all(screenWidth*0.04),
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text("北海道大学情報科学院M1"),
-                            Text("ヒューマンコンピュータインタラクション研究室所属"),
-                            Text("email:kusakabe.kan.v5[@]elms.hokudai.ac.jp"),
-                            url2link('https://github.com/osyakan', name:'githubアカウント'),
-                            url2link('https://twitter.com/HCI_kan', name: '@HCI_kan'),
+                      child: Row(
+                        children:[
+                          Image.asset('assets/programmer.png', width: screenWidth*0.3,),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text("北海道大学情報科学院M1", style: TextStyle(fontWeight: FontWeight.bold, fontSize: screenWidth*0.025,),),
+                              Text("ヒューマンコンピュータインタラクション研究室所属", style: TextStyle(fontWeight: FontWeight.bold, fontSize: screenWidth*0.025,),),
+                              Text("email:kusakabe.kan.v5[@]elms.hokudai.ac.jp"),
+                              url2link('https://github.com/osyakan', name:'githubアカウント'),
+                              url2link('https://twitter.com/HCI_kan', name: '@HCI_kan'),
 
-                          ],
-                        ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                     Container(
@@ -135,10 +135,17 @@ class _MyHomePageState extends State<MyHomePage> {
                         defaultVerticalAlignment: TableCellVerticalAlignment.top,
                         columnWidths: <int, TableColumnWidth>{
                           0: FixedColumnWidth(screenWidth*0.1),
-                          1: FixedColumnWidth(screenWidth*0.4),
+                          1: FixedColumnWidth(screenWidth*0.25),
                           2: FlexColumnWidth(),
                         },
                         children: [
+                          TableRow(
+                            children:[
+                              Text("経歴",style: TextStyle(fontSize: agesize*1.5,),),
+                              Text(""),
+                              Text(""),
+                            ],
+                          ),
                           TableRow(
                             children: [
                               Text("2015 - 2020",style: TextStyle(fontSize: agesize,),),
@@ -152,10 +159,29 @@ class _MyHomePageState extends State<MyHomePage> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children:[
-                                  Text("ほげほげ大会準優勝やったね",style: TextStyle(fontSize: detailsize),),
-                                  Text("ふがふが",style: TextStyle(fontSize: detailsize),),
+                                  Text("全国高等専門学校体育大会柔道競技の部団体3連覇(2020)",style: TextStyle(fontSize: detailsize),),
+                                  Text("全国高等専門学校体育大会柔道競技の部個人準優勝(2020)",style: TextStyle(fontSize: detailsize),),
+                                  url2link("https://www.gifu-nct.ac.jp/elec/deguchi/sotsuron/kusakabe.pdf", name:"卒業研究", urlsize: detailsize),
                                   Text("はんげー",style: TextStyle(fontSize: detailsize),),
                                 ]
+                              ),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              Text("2020 - 2022",style: TextStyle(fontSize: agesize,),),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children:[
+                                  Text("北海道大学情報エレクトロニクス学科",style: TextStyle(fontSize: schoolnamesize,),),
+                                  Text("ヒューマンコンピュータインタラクション研究室",style: TextStyle(fontSize: schoolnamesize,),),
+                                ],
+                              ),
+                              Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children:[
+                                    url2link("http://www.sighci.jp/events/sig/197", name: "無段階調整インタフェースのためのハンドジェスチャによる操作手法の探索的研究(HCI197)", urlsize: detailsize),
+                                  ]
                               ),
                             ],
                           ),
@@ -188,13 +214,17 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.teal[100*i.key],
+                      borderRadius: BorderRadius.circular(10),
+                      // color: Colors.teal[10*i.key+100],
+                      color: Colors.primaries[_random.nextInt(Colors.primaries.length)]
+                      [_random.nextInt(9) * 100],
                     ),
-                    margin: EdgeInsets.all(screenHeight*0.01),
+                    margin: EdgeInsets.all(screenHeight*0.015),
                     child: Column(
+                      // mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(i.value[0]),
+                        Text(i.value[0],style: TextStyle(fontSize: screenWidth*0.03,),),
                         Image.asset(i.value[1], fit: BoxFit.cover),
                       ]),
                 ));
@@ -222,7 +252,7 @@ class SecondRoute extends StatelessWidget{
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(child_list[0]),
+        // title: Text(child_list[0]),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -231,10 +261,11 @@ class SecondRoute extends StatelessWidget{
             margin: EdgeInsets.all(screenWidth*0.08),
             child: Column(
               children: [
-                // Text("title"),
+                Text(child_list[0]),
                 Image.asset(child_list[1], fit: BoxFit.cover),
                 Text(child_list[2]),
-                url2link(child_list[3]),
+                if(child_list[3]!='')url2link(child_list[3]),
+                if(child_list[4]!='')url2link(child_list[4]),
               ],
             ),
           ),
@@ -244,9 +275,9 @@ class SecondRoute extends StatelessWidget{
 }
 
 //URLの文字列からハイパーリンクを返す関数
-Widget url2link(String url, {String? name}){
+Widget url2link(String url, {String? name, double? urlsize}){
   return InkWell(
-    child: Text(name is Null?url:name, style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline),),
+    child: Text(name is Null?url:name, style: urlsize is Null?TextStyle(color: Colors.blue, decoration: TextDecoration.underline):TextStyle(color: Colors.blue, decoration: TextDecoration.underline, fontSize: urlsize),),
     onTap: () async{
       if (await canLaunch(url)){
         await launch(
