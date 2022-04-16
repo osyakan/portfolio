@@ -8,51 +8,6 @@ void main() {
   runApp(const MyApp());
 }
 
-//後で下に移す
-class SecondRoute extends StatelessWidget{
-  // added
-  SecondRoute(this.child_list);
-  List<String> child_list;
-
-  // const SecondRoute({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-
-    // get screensize
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(child_list[0]),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: Container(
-          margin: EdgeInsets.all(screenWidth*0.08),
-          child: Column(
-            children: [
-              // Text("title"),
-              Image.asset(child_list[1], fit: BoxFit.cover),
-              Text(child_list[2]),
-              InkWell(
-                child: Text(child_list[3]),
-                onTap: () async{
-                  if (await canLaunch(child_list[3])){
-                    await launch(
-                      child_list[3],
-                    );
-                  }
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -121,26 +76,94 @@ class _MyHomePageState extends State<MyHomePage> {
       ['4', 'assets/programmer.png', 'title12', 'datail12'],
       ['4', 'assets/programmer.png', 'title13', 'datail13'],
     ];
-
+    double agesize = screenWidth*0.03;
+    double schoolnamesize = screenWidth*0.018;
+    double detailsize = screenWidth*0.018;
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
             pinned: true,
-            expandedHeight: screenHeight * 0.5,
+            expandedHeight: screenHeight * 0.4,
+            backgroundColor: Colors.green,
             flexibleSpace: FlexibleSpaceBar(
-              // centerTitle: true,
-              title: Center(
-                child: Text(
+              title: Text(
                     "Kusakabe Kan's portfolio",
                   style: TextStyle(
                     fontSize: screenWidth*0.035,
                   ),
                 ),
+              centerTitle: true,
+              background: Stack(
+                children:[
+                  Positioned(
+                    top: 0,
+                      child: SizedBox(
+                        height: screenHeight*0.3,
+                        width: screenWidth,
+                        child: Image.asset('assets/programmer.png', fit: BoxFit.cover),
+                      ),
+                  ),
+                ],
               ),
-              // Text("Kusakabe Kan's portfolio"),
-              background: Image.asset('assets/programmer.png', fit: BoxFit.cover),
             ),
+          ),
+          SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  Container(
+                    decoration: BoxDecoration(color: Colors.green),
+                    // margin: EdgeInsets.all(screenWidth*0.08),
+                    child: Container(
+                      margin: EdgeInsets.all(screenWidth*0.04),
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text("北海道大学情報科学院M1"),
+                            Text("ヒューマンコンピュータインタラクション研究室所属"),
+                            Text("email:kusakabe.kan.v5[@]elms.hokudai.ac.jp"),
+                            url2link('https://github.com/osyakan', name:'githubアカウント'),
+                            url2link('https://twitter.com/HCI_kan', name: '@HCI_kan'),
+
+                          ],
+                        ),
+                    ),
+                  ),
+                    Container(
+                      margin: EdgeInsets.all(screenWidth*0.03),
+                      child: Table(
+                        defaultVerticalAlignment: TableCellVerticalAlignment.top,
+                        columnWidths: <int, TableColumnWidth>{
+                          0: FixedColumnWidth(screenWidth*0.1),
+                          1: FixedColumnWidth(screenWidth*0.4),
+                          2: FlexColumnWidth(),
+                        },
+                        children: [
+                          TableRow(
+                            children: [
+                              Text("2015 - 2020",style: TextStyle(fontSize: agesize,),),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children:[
+                                  Text("岐阜工業高等専門学校",style: TextStyle(fontSize: schoolnamesize,),),
+                                  Text("電気情報工学科",style: TextStyle(fontSize: schoolnamesize,),),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children:[
+                                  Text("ほげほげ大会準優勝やったね",style: TextStyle(fontSize: detailsize),),
+                                  Text("ふがふが",style: TextStyle(fontSize: detailsize),),
+                                  Text("はんげー",style: TextStyle(fontSize: detailsize),),
+                                ]
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                ]
+              ),
           ),
           SliverGrid.count(
             crossAxisCount: 3,
@@ -149,10 +172,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   onTap: (){
                     Navigator.push(
                       context,
-                      // PageTransition(
-                      //   child: SecondRoute(),
-                      //   type: PageTransitionType.leftToRight,
-                      // ),
                       PageRouteBuilder(
                         pageBuilder: (context, animation, secondaryAnimation) => SecondRoute(i.value),
                         transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -165,8 +184,6 @@ class _MyHomePageState extends State<MyHomePage> {
                           );
                         }
                       ),
-                      // MaterialPageRoute(builder: (context){return SecondRoute();}),
-                      // MaterialPageRoute(builder: (context) => SecondRoute()),
                     );
                   },
                   child: Container(
@@ -188,4 +205,58 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+//detail page
+class SecondRoute extends StatelessWidget{
+  // added
+  SecondRoute(this.child_list);
+  List<String> child_list;
+
+  // const SecondRoute({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+
+    // get screensize
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(child_list[0]),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Container(
+            margin: EdgeInsets.all(screenWidth*0.08),
+            child: Column(
+              children: [
+                // Text("title"),
+                Image.asset(child_list[1], fit: BoxFit.cover),
+                Text(child_list[2]),
+                url2link(child_list[3]),
+              ],
+            ),
+          ),
+        ),),
+    );
+  }
+}
+
+//URLの文字列からハイパーリンクを返す関数
+Widget url2link(String url, {String? name}){
+  return InkWell(
+    child: Text(name is Null?url:name, style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline),),
+    onTap: () async{
+      if (await canLaunch(url)){
+        await launch(
+          url,
+        );
+      }
+    },
+  );
+}
+
+//年号<String>, 学校名<String>, 詳細 List<String>を渡して
+
 
