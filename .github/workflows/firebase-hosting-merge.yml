@@ -12,9 +12,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # added part is following
+
+      # -- ここから追記部分！ -- #
+      # Flutter のインストール clone がはやい
       - name: Install Flutter
         run: git clone https://github.com/flutter/flutter.git
+
       # PATH を通す
       - name: Add path
         run: echo "$(pwd)/flutter/bin" >> $GITHUB_PATH
@@ -22,9 +25,8 @@ jobs:
       # パッケージのダウンロード
       - name: Download Flutter packages
         run: flutter pub get
-      #up to here
 
-      # - run: npm ci && npm run build
+        
       - run: flutter build web
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
@@ -32,5 +34,3 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PORTFOLIO_20220417 }}'
           channelId: live
           projectId: portfolio-20220417
-        env:
-          FIREBASE_CLI_PREVIEWS: hostingchannels
