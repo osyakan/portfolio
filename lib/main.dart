@@ -42,13 +42,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
     //コンテンツのタイトルと画像(Map型)
     List mycontents = [
-      ['content title',
-        'assets/programmer.png',
-        '''
-        コンテンツの詳細明記
-        ''',
-        ['https://github.com/osyakan', 'youtube-url'],
-      ],
       ['ヘビVR',
         'assets/programmer.png',
         '''
@@ -63,13 +56,83 @@ class _MyHomePageState extends State<MyHomePage> {
         ''',
         ['https://github.com/osyakan', 'youtube-url'],
       ],
-      ['content title',
+      ['コンテンツ名',
         'assets/programmer.png',
         '''
         コンテンツの詳細明記
         ''',
-        ['https://github.com/osyakan', 'youtube-url'],
+        ['url1', 'url2', '...', 'urlN'],
       ],
+      ['コンテンツ名',
+        'assets/programmer.png',
+        '''
+        コンテンツの詳細明記
+        ''',
+        ['url1', 'url2', '...', 'urlN'],
+      ],
+      ['コンテンツ名',
+        'assets/programmer.png',
+        '''
+        コンテンツの詳細明記
+        ''',
+        ['url1', 'url2', '...', 'urlN'],
+      ],
+      ['コンテンツ名',
+        'assets/programmer.png',
+        '''
+        コンテンツの詳細明記
+        ''',
+        ['url1', 'url2', '...', 'urlN'],
+      ],
+      ['コンテンツ名',
+        'assets/programmer.png',
+        '''
+        コンテンツの詳細明記
+        ''',
+        ['url1', 'url2', '...', 'urlN'],
+      ],
+      ['コンテンツ名',
+        'assets/programmer.png',
+        '''
+        コンテンツの詳細明記
+        ''',
+        ['url1', 'url2', '...', 'urlN'],
+      ],
+      ['コンテンツ名',
+        'assets/programmer.png',
+        '''
+        コンテンツの詳細明記
+        ''',
+        ['url1', 'url2', '...', 'urlN'],
+      ],['コンテンツ名',
+        'assets/programmer.png',
+        '''
+        コンテンツの詳細明記
+        ''',
+        ['url1', 'url2', '...', 'urlN'],
+      ],
+      ['コンテンツ名',
+        'assets/programmer.png',
+        '''
+        コンテンツの詳細明記
+        ''',
+        ['url1', 'url2', '...', 'urlN'],
+      ],['コンテンツ名',
+        'assets/programmer.png',
+        '''
+        コンテンツの詳細明記
+        ''',
+        ['url1', 'url2', '...', 'urlN'],
+      ],
+      ['コンテンツ名',
+        'assets/programmer.png',
+        '''
+        コンテンツの詳細明記
+        ''',
+        ['url1', 'url2', '...', 'urlN'],
+      ],
+
+
     ];
     double agesize = screenWidth*0.02;
     double schoolnamesize = screenWidth*0.018;
