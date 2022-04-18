@@ -103,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
         '''
         コンテンツの詳細明記
         ''',
-        ['url1', 'url2', '...', 'urlN'], 
+        ['url1', 'url2', '...', 'urlN'],
       ],['コンテンツ名',
         'assets/programmer.png',
         '''
@@ -243,6 +243,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children:[
                                     url2link("http://www.sighci.jp/events/sig/197", name: "無段階調整インタフェースのためのハンドジェスチャによる操作手法の探索的研究(HCI197)", urlsize: detailsize),
+                                    url2link("http://www.gakujuren.or.jp/101.html", name: "全日本学生柔道優勝大会出場", urlsize: detailsize),
+                                    url2link("http://www.gakujuren.or.jp/102.html", name: "全日本学生柔道体重別選手権大会出場", urlsize: detailsize),
                                   ]
                               ),
                             ],
