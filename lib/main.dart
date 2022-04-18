@@ -103,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
         '''
         コンテンツの詳細明記
         ''',
-        ['url1', 'url2', '...', 'urlN'],
+        ['url1', 'url2', '...', 'urlN'], 
       ],['コンテンツ名',
         'assets/programmer.png',
         '''
