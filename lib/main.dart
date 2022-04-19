@@ -396,6 +396,7 @@ Widget url2youtubeplayer(String url){
       startAt: Duration(seconds: 0),
       showControls: true,
       showFullscreenButton: true,
+      autoPlay: false,
     ),
   );
   return YoutubePlayerControllerProvider(
