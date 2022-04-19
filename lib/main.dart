@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:math';
+import 'package:youtube_player_iframe/youtube_player_iframe.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -15,11 +18,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Kusakabe Kan's portfolio",
+      title: "日下部完のポートフォリオ",
       theme: ThemeData(
         primarySwatch: Colors.cyan,
+        fontFamily: "Noto Sans JP",
       ),
-      home: const MyHomePage(title: "Kusakabe Kan's portfolio"),
+      locale: Locale("ja", "JP"),
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale("ja", ""),
+      ],
+      home: const MyHomePage(title: "日下部完のポートフォリオ"),
     );
   }
 }
@@ -40,100 +53,75 @@ class _MyHomePageState extends State<MyHomePage> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
-    //コンテンツのタイトルと画像(Map型)
-    List mycontents = [
-      ['ヘビVR',
-        'assets/programmer.png',
-        '''
-        コンテンツの詳細明記
-        ''',
-        ['https://github.com/osyakan', 'youtube-url'],
-      ],
-      ['ハンドジェスチャアプリ',
-        'assets/programmer.png',
-        '''
-        コンテンツの詳細明記
-        ''',
-        ['https://github.com/osyakan', 'youtube-url'],
-      ],
-      ['コンテンツ名',
-        'assets/programmer.png',
-        '''
-        コンテンツの詳細明記
-        ''',
-        ['url1', 'url2', '...', 'urlN'],
-      ],
-      ['コンテンツ名',
-        'assets/programmer.png',
-        '''
-        コンテンツの詳細明記
-        ''',
-        ['url1', 'url2', '...', 'urlN'],
-      ],
-      ['コンテンツ名',
-        'assets/programmer.png',
-        '''
-        コンテンツの詳細明記
-        ''',
-        ['url1', 'url2', '...', 'urlN'],
-      ],
-      ['コンテンツ名',
-        'assets/programmer.png',
-        '''
-        コンテンツの詳細明記
-        ''',
-        ['url1', 'url2', '...', 'urlN'],
-      ],
-      ['コンテンツ名',
-        'assets/programmer.png',
-        '''
-        コンテンツの詳細明記
-        ''',
-        ['url1', 'url2', '...', 'urlN'],
-      ],
-      ['コンテンツ名',
-        'assets/programmer.png',
-        '''
-        コンテンツの詳細明記
-        ''',
-        ['url1', 'url2', '...', 'urlN'],
-      ],
-      ['コンテンツ名',
-        'assets/programmer.png',
-        '''
-        コンテンツの詳細明記
-        ''',
-        ['url1', 'url2', '...', 'urlN'],
-      ],['コンテンツ名',
-        'assets/programmer.png',
-        '''
-        コンテンツの詳細明記
-        ''',
-        ['url1', 'url2', '...', 'urlN'],
-      ],
-      ['コンテンツ名',
-        'assets/programmer.png',
-        '''
-        コンテンツの詳細明記
-        ''',
-        ['url1', 'url2', '...', 'urlN'],
-      ],['コンテンツ名',
-        'assets/programmer.png',
-        '''
-        コンテンツの詳細明記
-        ''',
-        ['url1', 'url2', '...', 'urlN'],
-      ],
-      ['コンテンツ名',
-        'assets/programmer.png',
-        '''
-        コンテンツの詳細明記
-        ''',
-        ['url1', 'url2', '...', 'urlN'],
-      ],
-
-
+    // 表示するコンテンツ
+    List contents = [
+      {
+        'title'       : 'ヘビVR',
+        'pic'         : 'assets/snakeVR_pic.jpg',
+        'detail'      :
+'''
+ヘビの視覚を体験するOculus Quest2用のアプリケーション。
+ヘビはピット器官と呼ばれる器官を通して赤外線が見えているらしく、このアプリケーションはそんな赤外線の可視化を体験しながら、30秒間でいくつの餌（ネズミ）を捕食できるかを計るゲームです。
+開発にはゲームエンジンのUnityを利用してC#をコーディングしました。
+このプロジェクトは北大テックガレージ(リンク下記)のプログラム参加中に作成しました。
+''',
+        'url'         : ['https://github.com/osyakan/snakeVR_app', "https://u4u.oeic.hokudai.ac.jp/6146/", 'https://www.youtube.com/watch?v=cCAgF45Rq8Q', 'https://www.youtube.com/watch?v=fDU2Zfb23Mk'],
+      },
+      {
+        'title'       : 'ハンドジェスチャアプリケーション',
+        'pic'         : 'assets/handgesture_pic.jpg',
+        'detail'      :
+'''
+ウェブカメラを入力に利用したハンドジェスチャで遊ぶアプリケーション。
+HCI197の研究用に作成したタスク実行アプリケーションを改造し、タスクをただひたすら行うアプリケーションにしました。
+開発言語にはpythonを選択し、コアとなるライブラリにはopenCVとgoogleから公開されているmediapipeを利用しています。
+以上のライブラリから手のランドマークを取得し、処理を行っています。具体的には手をつまむような動作をトリガーとして、ハンドジェスチャ入力を受け付けます。
+手のランドマークを絶対座標から相対座標へ変換し、そこからつまむハンドポーズを検知し、指定されたハンドジェスチャごとに動きに合わせて処理を行います。
+''',
+        'url'         : ['https://github.com/osyakan/handgesture_app', 'https://www.youtube.com/watch?v=jzVdSQoVtjo'],
+      },
+      {
+        'title'       : 'このサイト',
+        'pic'         : 'assets/website_pic.png',
+        'detail'      :
+'''
+ポートフォリオ用ウェブサイトを作成するにあたって、せっかくなのでいろいろ自作しました。
+フロントエンドはFlutter web（Dart）を利用し、バックエンドはGithubとFirebaseを連携させて運用しています。
+''',
+        'url'         : ['https://github.com/osyakan/portfolio'],
+      },
+      {
+        'title'       : 'title of content',
+        'pic'         : 'assets/programmer.png',
+        'detail'      : 'detail of content',
+        'url'         : ['other url1', '...', 'other urlN'],
+      },
+      {
+        'title'       : 'title of content',
+        'pic'         : 'assets/programmer.png',
+        'detail'      : 'detail of content',
+        'url'         : ['other url1', '...', 'other urlN'],
+      },
+      {
+        'title'       : 'title of content',
+        'pic'         : 'assets/programmer.png',
+        'detail'      : 'detail of content',
+        'url'         : ['other url1', '...', 'other urlN'],
+      },
+      {
+        'title'       : 'title of content',
+        'pic'         : 'assets/programmer.png',
+        'detail'      : 'detail of content',
+        'url'         : ['other url1', '...', 'other urlN'],
+      },
+      {
+        'title'       : 'title of content',
+        'pic'         : 'assets/programmer.png',
+        'detail'      : 'detail of content',
+        'url'         : ['other url1', '...', 'other urlN'],
+      },
     ];
+
     double agesize = screenWidth*0.02;
     double schoolnamesize = screenWidth*0.018;
     double detailsize = screenWidth*0.018;
@@ -146,9 +134,9 @@ class _MyHomePageState extends State<MyHomePage> {
             expandedHeight: screenHeight * 0.4,
             flexibleSpace: FlexibleSpaceBar(
               title: Text(
-                    "Kusakabe Kan's portfolio",
+                    "日下部完のポートフォリオ",
                   style: TextStyle(
-                    fontSize: screenWidth*0.035,
+                    fontSize: screenWidth*0.03,
                   ),
                 ),
               centerTitle: true,
@@ -159,7 +147,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: SizedBox(
                         height: screenHeight*0.3,
                         width: screenWidth,
-                        child: Image.asset('assets/programmer.png', fit: BoxFit.cover),
+                        child: Image.asset('assets/programmer.png', fit: BoxFit.contain ),
                       ),
                   ),
                 ],
@@ -176,7 +164,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       margin: EdgeInsets.all(screenWidth*0.04),
                       child: Row(
                         children:[
-                          Image.asset('assets/programmer.png', width: screenWidth*0.3,),
+                          Image.asset('assets/profile1.jpg', width: screenWidth*0.3,),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -257,7 +245,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           SliverGrid.count(
             crossAxisCount: 3,
-              children: mycontents.asMap().entries.map((i){
+              children: contents.asMap().entries.map((i){
                 return InkWell(
                   onTap: (){
                     Navigator.push(
@@ -286,10 +274,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     margin: EdgeInsets.all(screenHeight*0.015),
                     child: Column(
                       // mainAxisAlignment: MainAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Text(i.value[0],style: TextStyle(fontSize: screenWidth*0.02,),),
-                        Image.asset(i.value[1], fit: BoxFit.cover),
+                        Text(i.value['title'],style: TextStyle(fontSize: screenWidth*0.02,fontWeight: FontWeight.bold),),
+                        Image.asset(i.value['pic'], fit: BoxFit.cover),
                       ]),
                 ));
               }).toList()
@@ -304,9 +292,7 @@ class _MyHomePageState extends State<MyHomePage> {
 class SecondRoute extends StatelessWidget{
   // added
   SecondRoute(this.child_list);
-  List child_list;
-
-
+  Map child_list;
   // const SecondRoute({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -315,29 +301,71 @@ class SecondRoute extends StatelessWidget{
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
-    print(child_list[3]);
+    if (child_list['url'].length != 0) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            child_list['title'],
+            style: TextStyle(fontSize: screenWidth * 0.04,),
+          ),
+          centerTitle: true,
+        ),
+        body: SingleChildScrollView(
+          child: Center(
+            child: Container(
+              margin: EdgeInsets.all(screenWidth * 0.08),
+              child: Column(
+                children: [
+                  // Text(
+                  //   child_list['title'],
+                  //   style: TextStyle(
+                  //     fontSize: screenWidth * 0.04,
+                  //   ),
+                  // ),
+                  Image.asset(child_list['pic'], fit: BoxFit.contain),
+                  Text(child_list['detail'],
+                    style: TextStyle(fontSize: screenWidth * 0.03,),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(screenWidth*0.1),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: child_list['url']
+                          .map<Widget>((String url) => url2content(url))
+                          .toList(),
+                    ),
+                  ),
 
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
     return Scaffold(
       appBar: AppBar(
-        // title: Text(child_list[0]),
+        title: Text(
+          child_list['title'],
+          style: TextStyle(fontSize: screenWidth * 0.04,),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Center(
           child: Container(
-            margin: EdgeInsets.all(screenWidth*0.08),
+            margin: EdgeInsets.all(screenWidth * 0.08),
             child: Column(
               children: [
-                Text(child_list[0],style: TextStyle(fontSize: screenWidth*0.04,),),
-                Image.asset(child_list[1], fit: BoxFit.cover),
-                Text(child_list[2]),
-                Column(
-                  children: child_list[3].map<Widget>((String url)=>url2link(url)).toList(),
+                Image.asset(child_list['pic'], fit: BoxFit.contain),
+                Text(child_list['detail'],
+                  style: TextStyle(fontSize: screenWidth * 0.03,),
                 ),
               ],
             ),
           ),
-        ),),
+        ),
+      ),
     );
   }
 }
@@ -356,6 +384,33 @@ Widget url2link(String url, {String? name, double? urlsize}){
   );
 }
 
-//年号<String>, 学校名<String>, 詳細 List<String>を渡して
+Widget url2youtubeplayer(String url){
+  if (url == ''){
+    print("yes come in ");
+    return SizedBox.shrink();
+  }
+
+  YoutubePlayerController _controller = YoutubePlayerController(
+    initialVideoId: url.split('v=').last,
+    params: YoutubePlayerParams(
+      startAt: Duration(seconds: 0),
+      showControls: true,
+      showFullscreenButton: true,
+    ),
+  );
+  return YoutubePlayerControllerProvider(
+    controller: _controller,
+    child: YoutubePlayerIFrame(
+      aspectRatio: 16 / 9,
+    ),
+  );
+}
+
+Widget url2content(String url){
+  if(url.contains('youtube.com')){
+    return url2youtubeplayer(url);
+  }
+  return url2link(url);
+}
 
 
