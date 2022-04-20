@@ -52,6 +52,11 @@ class _MyHomePageState extends State<MyHomePage> {
     // get screensize
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+    if (screenWidth>screenHeight){
+      double tmp = screenHeight;
+      screenHeight = screenWidth;
+      screenWidth = tmp;
+    }
 
     // 表示するコンテンツ
     List contents = [
@@ -91,32 +96,56 @@ HCI197の研究用に作成したタスク実行アプリケーションを改�
         'url'         : ['https://github.com/osyakan/portfolio'],
       },
       {
-        'title'       : 'title of content',
-        'pic'         : 'assets/programmer.png',
+        'title'       : 'no content',
+        'pic'         : 'assets/nocontent.png',
         'detail'      : 'detail of content',
         'url'         : ['other url1', '...', 'other urlN'],
       },
       {
-        'title'       : 'title of content',
-        'pic'         : 'assets/programmer.png',
+        'title'       : 'no content',
+        'pic'         : 'assets/nocontent.png',
         'detail'      : 'detail of content',
         'url'         : ['other url1', '...', 'other urlN'],
       },
       {
-        'title'       : 'title of content',
-        'pic'         : 'assets/programmer.png',
+        'title'       : 'no content',
+        'pic'         : 'assets/nocontent.png',
         'detail'      : 'detail of content',
         'url'         : ['other url1', '...', 'other urlN'],
       },
       {
-        'title'       : 'title of content',
-        'pic'         : 'assets/programmer.png',
+        'title'       : 'no content',
+        'pic'         : 'assets/nocontent.png',
         'detail'      : 'detail of content',
         'url'         : ['other url1', '...', 'other urlN'],
       },
       {
-        'title'       : 'title of content',
-        'pic'         : 'assets/programmer.png',
+        'title'       : 'no content',
+        'pic'         : 'assets/nocontent.png',
+        'detail'      : 'detail of content',
+        'url'         : ['other url1', '...', 'other urlN'],
+      },
+      {
+        'title'       : 'no content',
+        'pic'         : 'assets/nocontent.png',
+        'detail'      : 'detail of content',
+        'url'         : ['other url1', '...', 'other urlN'],
+      },
+      {
+        'title'       : 'no content',
+        'pic'         : 'assets/nocontent.png',
+        'detail'      : 'detail of content',
+        'url'         : ['other url1', '...', 'other urlN'],
+      },
+      {
+        'title'       : 'no content',
+        'pic'         : 'assets/nocontent.png',
+        'detail'      : 'detail of content',
+        'url'         : ['other url1', '...', 'other urlN'],
+      },
+      {
+        'title'       : 'no content',
+        'pic'         : 'assets/nocontent.png',
         'detail'      : 'detail of content',
         'url'         : ['other url1', '...', 'other urlN'],
       },
@@ -141,13 +170,14 @@ HCI197の研究用に作成したタスク実行アプリケーションを改�
                 ),
               centerTitle: true,
               background: Stack(
+                alignment: AlignmentDirectional.center,
                 children:[
                   Positioned(
                     top: 0,
                       child: SizedBox(
                         height: screenHeight*0.3,
                         width: screenWidth,
-                        child: Image.asset('assets/programmer.png', fit: BoxFit.contain ),
+                        child: Image.asset('assets/header.png', fit: BoxFit.contain ),
                       ),
                   ),
                 ],
@@ -160,6 +190,7 @@ HCI197の研究用に作成したタスク実行アプリケーションを改�
                   Container(
                     // decoration: BoxDecoration(color: Colors.green),
                     // margin: EdgeInsets.all(screenWidth*0.08),
+                    alignment: AlignmentDirectional.center,
                     child: Container(
                       margin: EdgeInsets.all(screenWidth*0.04),
                       child: Row(
@@ -277,7 +308,7 @@ HCI197の研究用に作成したタスク実行アプリケーションを改�
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Text(i.value['title'],style: TextStyle(fontSize: screenWidth*0.02,fontWeight: FontWeight.bold),),
-                        Image.asset(i.value['pic'], fit: BoxFit.cover),
+                        Image.asset(i.value['pic'], fit: BoxFit.contain),
                       ]),
                 ));
               }).toList()
@@ -324,7 +355,7 @@ class SecondRoute extends StatelessWidget{
                   // ),
                   Image.asset(child_list['pic'], fit: BoxFit.contain),
                   Text(child_list['detail'],
-                    style: TextStyle(fontSize: screenWidth * 0.03,),
+                    style: TextStyle(fontSize: screenWidth * 0.02,),
                   ),
                   Padding(
                     padding: EdgeInsets.all(screenWidth*0.1),
@@ -359,7 +390,7 @@ class SecondRoute extends StatelessWidget{
               children: [
                 Image.asset(child_list['pic'], fit: BoxFit.contain),
                 Text(child_list['detail'],
-                  style: TextStyle(fontSize: screenWidth * 0.03,),
+                  style: TextStyle(fontSize: screenWidth * 0.02,),
                 ),
               ],
             ),
