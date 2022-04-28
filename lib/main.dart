@@ -199,7 +199,7 @@ HCI197の研究用に作成したタスク実行アプリケーションを改�
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text("北海道大学情報科学院M1", style: TextStyle(fontWeight: FontWeight.bold, fontSize: screenWidth*0.025,),),
+                              Text("北海道大学大学院情報科学院M1", style: TextStyle(fontWeight: FontWeight.bold, fontSize: screenWidth*0.025,),),
                               Text("ヒューマンコンピュータインタラクション研究室所属", style: TextStyle(fontWeight: FontWeight.bold, fontSize: screenWidth*0.025,),),
                               Text("email:kusakabe.kan.v5[@]elms.hokudai.ac.jp"),
                               url2link('https://github.com/osyakan', name:'githubアカウント'),
