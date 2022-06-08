@@ -70,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
 開発にはゲームエンジンのUnityを利用してC#をコーディングしました。
 このプロジェクトは北大テックガレージ(リンク下記)のプログラム参加中に作成しました。
 ''',
-        'url'         : ['https://github.com/osyakan/snakeVR_app', "https://u4u.oeic.hokudai.ac.jp/6146/", 'https://www.youtube.com/watch?v=cCAgF45Rq8Q', 'https://www.youtube.com/watch?v=fDU2Zfb23Mk'],
+        'url'         : ['https://github.com/osyakan/snakeVR_app', 'https://www.youtube.com/watch?v=cCAgF45Rq8Q', "https://u4u.oeic.hokudai.ac.jp/6146/", 'https://www.youtube.com/watch?v=fDU2Zfb23Mk'],
       },
       {
         'title'       : 'ハンドジェスチャアプリケーション',
