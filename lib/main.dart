@@ -149,6 +149,18 @@ HCI197の研究用に作成したタスク実行アプリケーションを改�
         'detail'      : 'detail of content',
         'url'         : ['other url1', '...', 'other urlN'],
       },
+      {
+        'title'       : 'no content',
+        'pic'         : 'assets/nocontent.png',
+        'detail'      : 'detail of content',
+        'url'         : ['other url1', '...', 'other urlN'],
+      },
+      {
+        'title'       : 'no content',
+        'pic'         : 'assets/nocontent.png',
+        'detail'      : 'detail of content',
+        'url'         : ['other url1', '...', 'other urlN'],
+      },
     ];
 
     double agesize = screenWidth*0.02;
