@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'responsive_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'pages/project_page.dart';
+import 'dart:math';
 
 void main() {
   runApp(MyApp());
@@ -190,7 +192,10 @@ class Section extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       // サイドのパディングは16, 上下は8
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+      padding: EdgeInsets.symmetric(
+          horizontal:
+              min(max(MediaQuery.of(context).size.width * 0.024, 16), 100),
+          vertical: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -257,9 +262,124 @@ My current research interests are at the intersection of Human-Machine Interface
 }
 
 class ProjectContent extends StatelessWidget {
+  // Listでプロジェクトの内容を記述（title, image, youtubelink, youtubelink_sub, description, doi, publication1, publication2）
+  final List<Map<String, dynamic>> projects = [
+    {
+      'title':
+          'RingSenseRingSense: Exploring User-Defined Gestures for Phone Ring Holders',
+      'image': 'image/project1.png',
+      'youtubelink': 'https://youtu.be/qIABHe3MKs8',
+      'youtubelink_sub': 'https://youtu.be/JmkBwZaJJ9w',
+      'description':
+          'Project 1 description goes hereProject 1 description goes hereProject 1 description goes hereProject 1 description goes hereProject 1 description goes hereProject 1 description goes hereProject 1 description goes hereProject 1 description goes hereProject 1 description goes hereProject 1 description goes hereProject 1 description goes hereProject 1 description goes hereProject 1 description goes hereProject 1 description goes hereProject 1 description goes here',
+      'doi1': 'https://doi.org/10.12345',
+      'doi2': 'https://doi.org/10.12345',
+      'publication1': 'Publication 1',
+      'publication2': 'Publication 2',
+    },
+    {
+      'title': 'Project 2',
+      'image': 'image/project2.png',
+      'youtubelink': 'https://www.youtube.com/watch?v=2QjAquJL4R0',
+      'youtubelink_sub': 'https://www.youtube.com/watch?v=2QjAquJL4R0',
+      'description': 'Project 2 description goes here',
+      'doi1': 'https://doi.org/10.12345',
+      'doi2': 'https://doi.org/10.12345',
+      'publication1': 'Publication 1',
+      'publication2': 'Publication 2',
+    },
+    {
+      'title': 'Project 3',
+      'image': 'image/project3.png',
+      'youtubelink': 'https://www.youtube.com/watch?v=2QjAquJL4R0',
+      'youtubelink_sub': 'https://www.youtube.com/watch?v=2QjAquJL4R0',
+      'description': 'Project 3 description goes here',
+      'doi1': 'https://doi.org/10.12345',
+      'doi2': 'https://doi.org/10.12345',
+      'publication1': 'Publication 1',
+      'publication2': 'Publication 2',
+    },
+    {
+      'title': 'Project 2',
+      'image': 'image/project2.png',
+      'youtubelink': 'https://www.youtube.com/watch?v=2QjAquJL4R0',
+      'youtubelink_sub': 'https://www.youtube.com/watch?v=2QjAquJL4R0',
+      'description': 'Project 2 description goes here',
+      'doi1': 'https://doi.org/10.12345',
+      'doi2': 'https://doi.org/10.12345',
+      'publication1': 'Publication 1',
+      'publication2': 'Publication 2',
+    },
+    {
+      'title': 'Project 3',
+      'image': 'image/project3.png',
+      'youtubelink': 'https://www.youtube.com/watch?v=2QjAquJL4R0',
+      'youtubelink_sub': 'https://www.youtube.com/watch?v=2QjAquJL4R0',
+      'description': 'Project 3 description goes here',
+      'doi1': 'https://doi.org/10.12345',
+      'doi2': 'https://doi.org/10.12345',
+      'publication1': 'Publication 1',
+      'publication2': 'Publication 2',
+    },
+  ];
+  // titleとimageを横に並べたプロジェクトを縦に並べる
   @override
   Widget build(BuildContext context) {
-    return Text('Projects content goes here');
+    return Column(
+      children: projects
+          .map(
+            (project) => Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => ProjectPage(
+                          title: project['title'],
+                          image: project['image'],
+                          youtubelink: project['youtubelink'],
+                          youtubelink_sub: project['youtubelink_sub'],
+                          description: project['description'],
+                          doi1: project['doi1'],
+                          doi2: project['doi2'],
+                          publication1: project['publication1'],
+                          publication2: project['publication2'],
+                        ),
+                      ),
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      // もしscreenが小さい場合は画像を表示しない
+                      if (!ResponsiveWidget.isSmallScreen(context))
+                        Container(
+                          width: 200,
+                          height: 200,
+                          child: Image.asset(project['image']),
+                        ),
+                      if (!ResponsiveWidget.isSmallScreen(context))
+                        SizedBox(width: 20),
+                      Expanded(
+                        child: Text(
+                          project['title'],
+                          style: TextStyle(
+                            fontSize: min(
+                                max(MediaQuery.of(context).size.width * 0.024,
+                                    20),
+                                25),
+                          ),
+                          overflow: TextOverflow.visible,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20),
+              ],
+            ),
+          )
+          .toList(),
+    );
   }
 }
 
