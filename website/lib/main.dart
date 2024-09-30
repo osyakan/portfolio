@@ -5,25 +5,46 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'pages/project_page.dart';
 import 'dart:math';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Locale _locale = Locale('en');
+
+  void _changeLanguage(Locale locale) {
+    setState(() {
+      _locale = locale;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'My Portfolio',
+      locale: _locale,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      title: 'Kan Kusakabe',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: PortfolioPage(),
+      home: PortfolioPage(changeLanguage: _changeLanguage),
     );
   }
 }
 
 class PortfolioPage extends StatefulWidget {
+  final void Function(Locale) changeLanguage;
+
+  PortfolioPage({required this.changeLanguage});
+
   @override
   _PortfolioPageState createState() => _PortfolioPageState();
 }
@@ -53,12 +74,16 @@ class _PortfolioPageState extends State<PortfolioPage> {
       controller: _scrollController,
       children: [
         Section(
-            key: _sectionKeys[0], title: 'About me', content: HomeContent()),
+            key: _sectionKeys[0],
+            title: AppLocalizations.of(context)!.header,
+            content: HomeContent()),
         Section(
-            key: _sectionKeys[1], title: 'Projects', content: ProjectContent()),
+            key: _sectionKeys[1],
+            title: AppLocalizations.of(context)!.project,
+            content: ProjectContent()),
         Section(
             key: _sectionKeys[2],
-            title: 'Publications',
+            title: AppLocalizations.of(context)!.publication,
             content: PublicationContent()),
       ],
     );
@@ -129,27 +154,76 @@ class _PortfolioPageState extends State<PortfolioPage> {
     return Drawer(
       child: ListView(
         children: [
-          DrawerHeader(
-            decoration: BoxDecoration(color: Theme.of(context).primaryColor),
-            child: Text(
-              'Menu',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
+          SizedBox(height: 20),
+          Container(
+            // add padding to the left
+            padding: EdgeInsets.only(left: 10),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              // paddingを追加
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.3,
+                height: MediaQuery.of(context).size.width * 0.3,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage('image/kan.png'),
+                  ),
+                ),
               ),
             ),
           ),
           ListTile(
-            title: Text('Home'),
+            title: Text(
+              AppLocalizations.of(context)!.home,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
             onTap: () => _scrollToSection(0),
           ),
+          SizedBox(height: 20),
           ListTile(
-            title: Text('Projects'),
+            // テキストをボルドにする
+            title: Text(
+              AppLocalizations.of(context)!.project,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
             onTap: () => _scrollToSection(1),
           ),
+          SizedBox(height: 20),
           ListTile(
-            title: Text('Publications'),
+            title: Text(
+              AppLocalizations.of(context)!.publication,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
             onTap: () => _scrollToSection(2),
+          ),
+          SizedBox(height: 20),
+          // 横向きに連絡先のアイコンを表示, アイコンはクリックするとリンク先に飛ぶ
+          Row(
+            children: [
+              IconButton(
+                icon: Icon(Icons.mail),
+                onPressed: () => launchUrl(
+                    Uri.parse('mailto:kusakabe.kan.v5@lems.hokudai.ac.jp')),
+              ),
+              IconButton(
+                icon: FaIcon(FontAwesomeIcons.instagram),
+                onPressed: () =>
+                    launchUrl(Uri.parse('https://www.instagram.com/hci_kan/')),
+              ),
+              IconButton(
+                // x.com
+                icon: FaIcon(FontAwesomeIcons.xTwitter),
+                onPressed: () => launchUrl(Uri.parse('https://x.com/HCI_kan')),
+              ),
+              IconButton(
+                // x.com
+                icon: FaIcon(FontAwesomeIcons.linkedin),
+                onPressed: () => launchUrl(Uri.parse(
+                    'https://www.linkedin.com/in/kan-kusakabe-a83589239/')),
+              ),
+            ],
           ),
         ],
       ),
@@ -161,7 +235,23 @@ class _PortfolioPageState extends State<PortfolioPage> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text('Kan\'s Portfolio'),
+        title: Text(AppLocalizations.of(context)!.title),
+        actions: [
+          // 言語切り替え
+          TextButton(
+            onPressed: () => setState(() {
+              widget.changeLanguage(Locale('en'));
+            }),
+            child: Text('EN', style: TextStyle(color: Colors.black)),
+          ),
+          Text("/"),
+          TextButton(
+            onPressed: () => setState(() {
+              widget.changeLanguage(Locale('ja'));
+            }),
+            child: Text('JP', style: TextStyle(color: Colors.black)),
+          ),
+        ],
         // smallScreenの場合はDrawerを表示
         leading: ResponsiveWidget.isSmallScreen(context)
             ? IconButton(
@@ -247,13 +337,7 @@ class HomeContent extends StatelessWidget {
       children: [
         SizedBox(height: 20),
         Text(
-          """
- I am a senior lecturer and researcher at the HCI lab of Jürgen Steimle at Saarland University. Previously, I was head of the HCI group at the Telecooperation Lab of Max Mühlhäuser at TU Darmstadt. I received a doctoral degree from TU Darmstadt where I explored 3D-printed interfaces. I have a background in computer science, psychology, and visual computing.
-
-In addition, I have been an affiliated researcher at the SIRIUS Lab , lead by Mohamed Khamis, at the University of Glasgow from 2021 to 2022, where we have investigated tangible approaches to more useable security. Starting from July 2022, I am also an affiliated and visiting researcher at the HCC section, lead by Kasper Hornbæk, at the University of Copenhagen. Together with Daniel Ashbrook, we explore approaches to 3D print haptics, combining my previous research on Fabrication and Haptics.
-
-My current research interests are at the intersection of Human-Machine Interfaces and Digital Fabrication, but also include Extended Reality and Haptics. In particular, I enjoy to design, build, and evaluate interfaces that strive to be tailored to individual users or use cases rather than to a common denominator. Feel free to check out my recent publications or contact me. 
-""",
+          AppLocalizations.of(context)!.selfIntrodution,
           style: TextStyle(fontSize: 18),
         ),
       ],
@@ -262,69 +346,53 @@ My current research interests are at the intersection of Human-Machine Interface
 }
 
 class ProjectContent extends StatelessWidget {
-  // Listでプロジェクトの内容を記述（title, image, youtubelink, youtubelink_sub, description, doi, publication1, publication2）
-  final List<Map<String, dynamic>> projects = [
-    {
-      'title':
-          'RingSenseRingSense: Exploring User-Defined Gestures for Phone Ring Holders',
-      'image': 'image/project1.png',
-      'youtubelink': 'https://youtu.be/qIABHe3MKs8',
-      'youtubelink_sub': 'https://youtu.be/JmkBwZaJJ9w',
-      'description':
-          'Project 1 description goes hereProject 1 description goes hereProject 1 description goes hereProject 1 description goes hereProject 1 description goes hereProject 1 description goes hereProject 1 description goes hereProject 1 description goes hereProject 1 description goes hereProject 1 description goes hereProject 1 description goes hereProject 1 description goes hereProject 1 description goes hereProject 1 description goes hereProject 1 description goes here',
-      'doi1': 'https://doi.org/10.12345',
-      'doi2': 'https://doi.org/10.12345',
-      'publication1': 'Publication 1',
-      'publication2': 'Publication 2',
-    },
-    {
-      'title': 'Project 2',
-      'image': 'image/project2.png',
-      'youtubelink': 'https://www.youtube.com/watch?v=2QjAquJL4R0',
-      'youtubelink_sub': 'https://www.youtube.com/watch?v=2QjAquJL4R0',
-      'description': 'Project 2 description goes here',
-      'doi1': 'https://doi.org/10.12345',
-      'doi2': 'https://doi.org/10.12345',
-      'publication1': 'Publication 1',
-      'publication2': 'Publication 2',
-    },
-    {
-      'title': 'Project 3',
-      'image': 'image/project3.png',
-      'youtubelink': 'https://www.youtube.com/watch?v=2QjAquJL4R0',
-      'youtubelink_sub': 'https://www.youtube.com/watch?v=2QjAquJL4R0',
-      'description': 'Project 3 description goes here',
-      'doi1': 'https://doi.org/10.12345',
-      'doi2': 'https://doi.org/10.12345',
-      'publication1': 'Publication 1',
-      'publication2': 'Publication 2',
-    },
-    {
-      'title': 'Project 2',
-      'image': 'image/project2.png',
-      'youtubelink': 'https://www.youtube.com/watch?v=2QjAquJL4R0',
-      'youtubelink_sub': 'https://www.youtube.com/watch?v=2QjAquJL4R0',
-      'description': 'Project 2 description goes here',
-      'doi1': 'https://doi.org/10.12345',
-      'doi2': 'https://doi.org/10.12345',
-      'publication1': 'Publication 1',
-      'publication2': 'Publication 2',
-    },
-    {
-      'title': 'Project 3',
-      'image': 'image/project3.png',
-      'youtubelink': 'https://www.youtube.com/watch?v=2QjAquJL4R0',
-      'youtubelink_sub': 'https://www.youtube.com/watch?v=2QjAquJL4R0',
-      'description': 'Project 3 description goes here',
-      'doi1': 'https://doi.org/10.12345',
-      'doi2': 'https://doi.org/10.12345',
-      'publication1': 'Publication 1',
-      'publication2': 'Publication 2',
-    },
-  ];
   // titleとimageを横に並べたプロジェクトを縦に並べる
   @override
   Widget build(BuildContext context) {
+    // ローカライゼーションのインスタンスを取得
+    final localizations = AppLocalizations.of(context)!;
+    // Listでプロジェクトの内容を記述（title, image, youtubelink, youtubelink_sub, description, doi, publication1, publication2）
+    final List<Map<String, dynamic>> projects = [
+      {
+        'title': localizations.p1Title,
+        'image': localizations.p1Image,
+        'youtubelink': localizations.p1Youtubelink,
+        'youtubelink_sub': localizations.p1Youtubelink_sub,
+        'description': localizations.p1Description,
+        'doi1': localizations.p1Doi1,
+        'doi2': localizations.p1Doi2,
+        'doi3': localizations.p1Doi3,
+        'publication1': localizations.p1Publication1,
+        'publication2': localizations.p1Publication2,
+        'publication3': localizations.p1Publication3,
+      },
+      {
+        'title': localizations.p2Title,
+        'image': localizations.p2Image,
+        'youtubelink': localizations.p2Youtubelink,
+        'youtubelink_sub': localizations.p2Youtubelink_sub,
+        'description': localizations.p2Description,
+        'doi1': localizations.p2Doi1,
+        'doi2': localizations.p2Doi2,
+        'doi3': localizations.p2Doi3,
+        'publication1': localizations.p2Publication1,
+        'publication2': localizations.p2Publication2,
+        'publication3': localizations.p2Publication3,
+      },
+      {
+        'title': localizations.p3Title,
+        'image': localizations.p3Image,
+        'youtubelink': localizations.p3Youtubelink,
+        'youtubelink_sub': localizations.p3Youtubelink_sub,
+        'description': localizations.p3Description,
+        'doi1': localizations.p3Doi1,
+        'doi2': localizations.p3Doi2,
+        'doi3': localizations.p3Doi3,
+        'publication1': localizations.p3Publication1,
+        'publication2': localizations.p3Publication2,
+        'publication3': localizations.p3Publication3,
+      },
+    ];
     return Column(
       children: projects
           .map(
@@ -342,8 +410,10 @@ class ProjectContent extends StatelessWidget {
                           description: project['description'],
                           doi1: project['doi1'],
                           doi2: project['doi2'],
+                          doi3: project['doi3'],
                           publication1: project['publication1'],
                           publication2: project['publication2'],
+                          publication3: project['publication3'],
                         ),
                       ),
                     );

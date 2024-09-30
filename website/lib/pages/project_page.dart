@@ -20,8 +20,10 @@ class ProjectPage extends StatelessWidget {
       description,
       doi1,
       doi2,
+      doi3,
       publication1,
-      publication2;
+      publication2,
+      publication3;
   ProjectPage(
       {Key? key,
       required this.title,
@@ -31,8 +33,10 @@ class ProjectPage extends StatelessWidget {
       required this.description,
       required this.doi1,
       required this.doi2,
+      required this.doi3,
       required this.publication1,
-      required this.publication2})
+      required this.publication2,
+      required this.publication3})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
