@@ -4,46 +4,26 @@ import 'responsive_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'pages/project_page.dart';
-import 'dart:math';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  Locale _locale = Locale('en');
-
-  void _changeLanguage(Locale locale) {
-    setState(() {
-      _locale = locale;
-    });
-  }
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      locale: _locale,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      title: 'Kan Kusakabe',
+      title: 'My Portfolio',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: PortfolioPage(changeLanguage: _changeLanguage),
+      home: PortfolioPage(),
     );
   }
 }
 
 class PortfolioPage extends StatefulWidget {
-  final void Function(Locale) changeLanguage;
-
-  PortfolioPage({required this.changeLanguage});
+  PortfolioPage();
 
   @override
   _PortfolioPageState createState() => _PortfolioPageState();
@@ -72,19 +52,40 @@ class _PortfolioPageState extends State<PortfolioPage> {
   Widget _buildContent() {
     return ListView(
       controller: _scrollController,
+      padding: EdgeInsets.symmetric(horizontal: 10),
       children: [
+        // もしsmallScreenの場合は画像を表示
+        if (ResponsiveWidget.isSmallScreen(context))
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.4,
+              height: MediaQuery.of(context).size.width * 0.4,
+              // 画像は円形にする
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('image/kan.png'),
+                ),
+              ),
+            ),
+          ),
         Section(
-            key: _sectionKeys[0],
-            title: AppLocalizations.of(context)!.header,
-            content: HomeContent()),
+          key: _sectionKeys[0],
+          title: 'About me',
+          content: HomeContent(),
+        ),
         Section(
-            key: _sectionKeys[1],
-            title: AppLocalizations.of(context)!.project,
-            content: ProjectContent()),
+          key: _sectionKeys[1],
+          title: 'Projects',
+          content: ProjectContent(),
+        ),
         Section(
-            key: _sectionKeys[2],
-            title: AppLocalizations.of(context)!.publication,
-            content: PublicationContent()),
+          key: _sectionKeys[2],
+          title: 'Publications',
+          content: PublicationContent(),
+        ),
       ],
     );
   }
@@ -100,7 +101,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
   // メインのナビゲーション
   Container mainBuilder() {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.all(10),
       width: MediaQuery.of(context).size.width * 0.25,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -116,7 +117,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
             ),
           ),
           SizedBox(height: 20),
-          NavLink(title: 'Home', onTap: () => _scrollToSection(0)),
+          NavLink(title: 'About me', onTap: () => _scrollToSection(0)),
           NavLink(title: 'Projects', onTap: () => _scrollToSection(1)),
           NavLink(title: 'Publications', onTap: () => _scrollToSection(2)),
           // 横向きに連絡先のアイコンを表示, アイコンはクリックするとリンク先に飛ぶ
@@ -155,75 +156,17 @@ class _PortfolioPageState extends State<PortfolioPage> {
       child: ListView(
         children: [
           SizedBox(height: 20),
-          Container(
-            // add padding to the left
-            padding: EdgeInsets.only(left: 10),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              // paddingを追加
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.3,
-                height: MediaQuery.of(context).size.width * 0.3,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage('image/kan.png'),
-                  ),
-                ),
-              ),
-            ),
-          ),
           ListTile(
-            title: Text(
-              AppLocalizations.of(context)!.home,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
+            title: Text('About me'),
             onTap: () => _scrollToSection(0),
           ),
-          SizedBox(height: 20),
           ListTile(
-            // テキストをボルドにする
-            title: Text(
-              AppLocalizations.of(context)!.project,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
+            title: Text('Projects'),
             onTap: () => _scrollToSection(1),
           ),
-          SizedBox(height: 20),
           ListTile(
-            title: Text(
-              AppLocalizations.of(context)!.publication,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
+            title: Text('Publications'),
             onTap: () => _scrollToSection(2),
-          ),
-          SizedBox(height: 20),
-          // 横向きに連絡先のアイコンを表示, アイコンはクリックするとリンク先に飛ぶ
-          Row(
-            children: [
-              IconButton(
-                icon: Icon(Icons.mail),
-                onPressed: () => launchUrl(
-                    Uri.parse('mailto:kusakabe.kan.v5@lems.hokudai.ac.jp')),
-              ),
-              IconButton(
-                icon: FaIcon(FontAwesomeIcons.instagram),
-                onPressed: () =>
-                    launchUrl(Uri.parse('https://www.instagram.com/hci_kan/')),
-              ),
-              IconButton(
-                // x.com
-                icon: FaIcon(FontAwesomeIcons.xTwitter),
-                onPressed: () => launchUrl(Uri.parse('https://x.com/HCI_kan')),
-              ),
-              IconButton(
-                // x.com
-                icon: FaIcon(FontAwesomeIcons.linkedin),
-                onPressed: () => launchUrl(Uri.parse(
-                    'https://www.linkedin.com/in/kan-kusakabe-a83589239/')),
-              ),
-            ],
           ),
         ],
       ),
@@ -235,23 +178,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.title),
-        actions: [
-          // 言語切り替え
-          TextButton(
-            onPressed: () => setState(() {
-              widget.changeLanguage(Locale('en'));
-            }),
-            child: Text('EN', style: TextStyle(color: Colors.black)),
-          ),
-          Text("/"),
-          TextButton(
-            onPressed: () => setState(() {
-              widget.changeLanguage(Locale('ja'));
-            }),
-            child: Text('JP', style: TextStyle(color: Colors.black)),
-          ),
-        ],
+        title: Text('Kusakabe Kan\'s Portfolio'),
         // smallScreenの場合はDrawerを表示
         leading: ResponsiveWidget.isSmallScreen(context)
             ? IconButton(
@@ -282,10 +209,7 @@ class Section extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       // サイドのパディングは16, 上下は8
-      padding: EdgeInsets.symmetric(
-          horizontal:
-              min(max(MediaQuery.of(context).size.width * 0.024, 16), 100),
-          vertical: 16),
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -337,7 +261,13 @@ class HomeContent extends StatelessWidget {
       children: [
         SizedBox(height: 20),
         Text(
-          AppLocalizations.of(context)!.selfIntrodution,
+          """
+ I am a senior lecturer and researcher at the HCI lab of Jürgen Steimle at Saarland University. Previously, I was head of the HCI group at the Telecooperation Lab of Max Mühlhäuser at TU Darmstadt. I received a doctoral degree from TU Darmstadt where I explored 3D-printed interfaces. I have a background in computer science, psychology, and visual computing.
+
+In addition, I have been an affiliated researcher at the SIRIUS Lab , lead by Mohamed Khamis, at the University of Glasgow from 2021 to 2022, where we have investigated tangible approaches to more useable security. Starting from July 2022, I am also an affiliated and visiting researcher at the HCC section, lead by Kasper Hornbæk, at the University of Copenhagen. Together with Daniel Ashbrook, we explore approaches to 3D print haptics, combining my previous research on Fabrication and Haptics.
+
+My current research interests are at the intersection of Human-Machine Interfaces and Digital Fabrication, but also include Extended Reality and Haptics. In particular, I enjoy to design, build, and evaluate interfaces that strive to be tailored to individual users or use cases rather than to a common denominator. Feel free to check out my recent publications or contact me. 
+""",
           style: TextStyle(fontSize: 18),
         ),
       ],
@@ -346,109 +276,49 @@ class HomeContent extends StatelessWidget {
 }
 
 class ProjectContent extends StatelessWidget {
-  // titleとimageを横に並べたプロジェクトを縦に並べる
+  // projectsを受け取る
+  final List<Map<String, dynamic>> projects = [
+    {
+      'title': 'Project 1',
+      'youtube_urls': ["https://www.youtube.com/watch?v=2QjAquJL4R0"],
+      'doi': null,
+      'description': 'Project 1 description goes here',
+      'publication': 'Project 1 publication goes here',
+      'image': 'image/kan.png',
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
-    // ローカライゼーションのインスタンスを取得
-    final localizations = AppLocalizations.of(context)!;
-    // Listでプロジェクトの内容を記述（title, image, youtubelink, youtubelink_sub, description, doi, publication1, publication2）
-    final List<Map<String, dynamic>> projects = [
-      {
-        'title': localizations.p1Title,
-        'image': localizations.p1Image,
-        'youtubelink': localizations.p1Youtubelink,
-        'youtubelink_sub': localizations.p1Youtubelink_sub,
-        'description': localizations.p1Description,
-        'doi1': localizations.p1Doi1,
-        'doi2': localizations.p1Doi2,
-        'doi3': localizations.p1Doi3,
-        'publication1': localizations.p1Publication1,
-        'publication2': localizations.p1Publication2,
-        'publication3': localizations.p1Publication3,
-      },
-      {
-        'title': localizations.p2Title,
-        'image': localizations.p2Image,
-        'youtubelink': localizations.p2Youtubelink,
-        'youtubelink_sub': localizations.p2Youtubelink_sub,
-        'description': localizations.p2Description,
-        'doi1': localizations.p2Doi1,
-        'doi2': localizations.p2Doi2,
-        'doi3': localizations.p2Doi3,
-        'publication1': localizations.p2Publication1,
-        'publication2': localizations.p2Publication2,
-        'publication3': localizations.p2Publication3,
-      },
-      {
-        'title': localizations.p3Title,
-        'image': localizations.p3Image,
-        'youtubelink': localizations.p3Youtubelink,
-        'youtubelink_sub': localizations.p3Youtubelink_sub,
-        'description': localizations.p3Description,
-        'doi1': localizations.p3Doi1,
-        'doi2': localizations.p3Doi2,
-        'doi3': localizations.p3Doi3,
-        'publication1': localizations.p3Publication1,
-        'publication2': localizations.p3Publication2,
-        'publication3': localizations.p3Publication3,
-      },
-    ];
-    return Column(
-      children: projects
-          .map(
-            (project) => Column(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => ProjectPage(
-                          title: project['title'],
-                          image: project['image'],
-                          youtubelink: project['youtubelink'],
-                          youtubelink_sub: project['youtubelink_sub'],
-                          description: project['description'],
-                          doi1: project['doi1'],
-                          doi2: project['doi2'],
-                          doi3: project['doi3'],
-                          publication1: project['publication1'],
-                          publication2: project['publication2'],
-                          publication3: project['publication3'],
-                        ),
-                      ),
-                    );
-                  },
-                  child: Row(
-                    children: [
-                      // もしscreenが小さい場合は画像を表示しない
-                      if (!ResponsiveWidget.isSmallScreen(context))
-                        Container(
-                          width: 200,
-                          height: 200,
-                          child: Image.asset(project['image']),
-                        ),
-                      if (!ResponsiveWidget.isSmallScreen(context))
-                        SizedBox(width: 20),
-                      Expanded(
-                        child: Text(
-                          project['title'],
-                          style: TextStyle(
-                            fontSize: min(
-                                max(MediaQuery.of(context).size.width * 0.024,
-                                    20),
-                                25),
-                          ),
-                          overflow: TextOverflow.visible,
-                        ),
-                      ),
-                    ],
-                  ),
+    return ListView.builder(
+      itemCount: projects.length,
+      itemBuilder: (context, index) {
+        final project = projects[index];
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProjectPage(
+                  title: project['title'],
+                  youtube_urls: project['youtube_urls'],
+                  doi: project['doi'],
+                  description: project['description'],
+                  publication: project['publication'],
+                  image: Image.asset(project['image']),
                 ),
-                SizedBox(height: 20),
-              ],
+              ),
+            );
+          },
+          child: Card(
+            child: ListTile(
+              leading: Image.asset(project['image']),
+              title: Text(project['title']),
+              subtitle: Text(project['description']),
             ),
-          )
-          .toList(),
+          ),
+        );
+      },
     );
   }
 }
