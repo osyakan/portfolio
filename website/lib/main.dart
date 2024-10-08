@@ -297,6 +297,7 @@ class ProjectContent extends StatelessWidget {
         return GestureDetector(
           onTap: () {
             Navigator.push(
+              //
               context,
               MaterialPageRoute(
                 builder: (context) => ProjectPage(
