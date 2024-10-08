@@ -35,15 +35,25 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: PortfolioPage(changeLanguage: _changeLanguage),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => PortfolioPage(
+              changeLanguage: _changeLanguage,
+              content: HomeContent(),
+            ),
+        '/project1': (context) => Project1Page(),
+        // '/project2': (context) => Project2Page(),
+        // '/project3': (context) => Project3Page(),
+      },
     );
   }
 }
 
 class PortfolioPage extends StatefulWidget {
   final void Function(Locale) changeLanguage;
+  final Widget content;
 
-  PortfolioPage({required this.changeLanguage});
+  PortfolioPage({required this.changeLanguage, required this.content});
 
   @override
   _PortfolioPageState createState() => _PortfolioPageState();
@@ -264,7 +274,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
       body: Row(
         children: [
           if (!ResponsiveWidget.isSmallScreen(context)) _buildNavigation(),
-          Expanded(child: _buildContent()),
+          Expanded(child: widget.content),
         ],
       ),
     );
@@ -345,6 +355,13 @@ class HomeContent extends StatelessWidget {
   }
 }
 
+class PublicationContent extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Text('Publications content goes here');
+  }
+}
+
 class ProjectContent extends StatelessWidget {
   // titleとimageを横に並べたプロジェクトを縦に並べる
   @override
@@ -352,96 +369,63 @@ class ProjectContent extends StatelessWidget {
     // ローカライゼーションのインスタンスを取得
     final localizations = AppLocalizations.of(context)!;
     // Listでプロジェクトの内容を記述（title, image, youtubelink, youtubelink_sub, description, doi, publication1, publication2）
+    // final List<Map<String, dynamic>> projects = [
+    //   {
+    //     'title': localizations.p1Title,
+    //     'image': localizations.p1Image,
+    //     'youtubelink': localizations.p1Youtubelink,
+    //     'youtubelink_sub': localizations.p1Youtubelink_sub,
+    //     'description': localizations.p1Description,
+    //     'doi1': localizations.p1Doi1,
+    //     'doi2': localizations.p1Doi2,
+    //     'doi3': localizations.p1Doi3,
+    //     'publication1': localizations.p1Publication1,
+    //     'publication2': localizations.p1Publication2,
+    //     'publication3': localizations.p1Publication3,
+    //   },
+    //   {
+    //     'title': localizations.p2Title,
+    //     'image': localizations.p2Image,
+    //     'youtubelink': localizations.p2Youtubelink,
+    //     'youtubelink_sub': localizations.p2Youtubelink_sub,
+    //     'description': localizations.p2Description,
+    //     'doi1': localizations.p2Doi1,
+    //     'doi2': localizations.p2Doi2,
+    //     'doi3': localizations.p2Doi3,
+    //     'publication1': localizations.p2Publication1,
+    //     'publication2': localizations.p2Publication2,
+    //     'publication3': localizations.p2Publication3,
+    //   },
+    //   {
+    //     'title': localizations.p3Title,
+    //     'image': localizations.p3Image,
+    //     'youtubelink': localizations.p3Youtubelink,
+    //     'youtubelink_sub': localizations.p3Youtubelink_sub,
+    //     'description': localizations.p3Description,
+    //     'doi1': localizations.p3Doi1,
+    //     'doi2': localizations.p3Doi2,
+    //     'doi3': localizations.p3Doi3,
+    //     'publication1': localizations.p3Publication1,
+    //     'publication2': localizations.p3Publication2,
+    //     'publication3': localizations.p3Publication3,
+    //   },
+    // ];
     final List<Map<String, dynamic>> projects = [
-      {
-        'title': localizations.p1Title,
-        'image': localizations.p1Image,
-        'youtubelink': localizations.p1Youtubelink,
-        'youtubelink_sub': localizations.p1Youtubelink_sub,
-        'description': localizations.p1Description,
-        'doi1': localizations.p1Doi1,
-        'doi2': localizations.p1Doi2,
-        'doi3': localizations.p1Doi3,
-        'publication1': localizations.p1Publication1,
-        'publication2': localizations.p1Publication2,
-        'publication3': localizations.p1Publication3,
-      },
-      {
-        'title': localizations.p2Title,
-        'image': localizations.p2Image,
-        'youtubelink': localizations.p2Youtubelink,
-        'youtubelink_sub': localizations.p2Youtubelink_sub,
-        'description': localizations.p2Description,
-        'doi1': localizations.p2Doi1,
-        'doi2': localizations.p2Doi2,
-        'doi3': localizations.p2Doi3,
-        'publication1': localizations.p2Publication1,
-        'publication2': localizations.p2Publication2,
-        'publication3': localizations.p2Publication3,
-      },
-      {
-        'title': localizations.p3Title,
-        'image': localizations.p3Image,
-        'youtubelink': localizations.p3Youtubelink,
-        'youtubelink_sub': localizations.p3Youtubelink_sub,
-        'description': localizations.p3Description,
-        'doi1': localizations.p3Doi1,
-        'doi2': localizations.p3Doi2,
-        'doi3': localizations.p3Doi3,
-        'publication1': localizations.p3Publication1,
-        'publication2': localizations.p3Publication2,
-        'publication3': localizations.p3Publication3,
-      },
+      {'title': localizations.p1Title, 'route': '/project1'},
+      {'title': localizations.p2Title, 'route': '/project2'},
+      {'title': localizations.p3Title, 'route': '/project3'},
     ];
+
     return Column(
       children: projects
           .map(
             (project) => Column(
               children: [
                 GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => ProjectPage(
-                          title: project['title'],
-                          image: project['image'],
-                          youtubelink: project['youtubelink'],
-                          youtubelink_sub: project['youtubelink_sub'],
-                          description: project['description'],
-                          doi1: project['doi1'],
-                          doi2: project['doi2'],
-                          doi3: project['doi3'],
-                          publication1: project['publication1'],
-                          publication2: project['publication2'],
-                          publication3: project['publication3'],
-                        ),
-                      ),
-                    );
-                  },
-                  child: Row(
-                    children: [
-                      // もしscreenが小さい場合は画像を表示しない
-                      if (!ResponsiveWidget.isSmallScreen(context))
-                        Container(
-                          width: 200,
-                          height: 200,
-                          child: Image.asset(project['image']),
-                        ),
-                      if (!ResponsiveWidget.isSmallScreen(context))
-                        SizedBox(width: 20),
-                      Expanded(
-                        child: Text(
-                          project['title'],
-                          style: TextStyle(
-                            fontSize: min(
-                                max(MediaQuery.of(context).size.width * 0.024,
-                                    20),
-                                25),
-                          ),
-                          overflow: TextOverflow.visible,
-                        ),
-                      ),
-                    ],
+                  onTap: () => Navigator.pushNamed(context, project['route']),
+                  child: Text(
+                    project['title'],
+                    style: TextStyle(fontSize: 20),
                   ),
                 ),
                 SizedBox(height: 20),
@@ -453,9 +437,27 @@ class ProjectContent extends StatelessWidget {
   }
 }
 
-class PublicationContent extends StatelessWidget {
+class Project1Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Text('Publications content goes here');
+    final localizations = AppLocalizations.of(context)!;
+    return PortfolioPage(
+      changeLanguage: (Locale locale) {
+        // 言語変更のロジックをここに実装
+      },
+      content: Column(
+        children: [
+          Text(
+            localizations.p1Title,
+            style: Theme.of(context).textTheme.headline4,
+          ),
+          Image.asset(localizations.p1Image),
+          Text(localizations.p1Description),
+          // YouTube リンクや出版物などの他の情報を追加
+        ],
+      ),
+    );
   }
 }
+
+// Project2Page, Project3Page も同様に作成
