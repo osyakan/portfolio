@@ -465,7 +465,7 @@ class PublicationContent extends StatelessWidget {
     final publications_jp_peer = [
       {
         'publication':
-            '日下部完, 阿部優樹, 坂本大介, 小野哲雄. 第31回インタラクティブシステムとソフトウェアに関するワークショップ（WISS 2023）. 日本ソフトウェア科学会, 1-A03, 2023年11月.',
+            '日下部完, 阿部優樹, 坂本大介, 小野哲雄. 第31回インタラクティブシステムとソフトウェアに関するワークショップ（WISS 2023）. 日本ソフトウェア科学会, 1-A03, 2023年11月. ',
         'doi': 'https://www.wiss.org/WISS2023Proceedings/data/1-A03.pdf'
       },
     ];
@@ -473,7 +473,7 @@ class PublicationContent extends StatelessWidget {
     final publications_jp_non_peer = [
       {
         'publication':
-            '日下部 完 , 崔 明根 , 坂本 大介 , 小野 哲雄. 無段階調整インタフェースのためのハンドジェスチャによる操作手法の探索的研究. 情報処理学会 研究報告ヒューマンコンピュータインタラクション（HCI）, 2022-HCI-197(25), 1-8, 2188-8760, 2022年3月.',
+            '日下部 完 , 崔 明根 , 坂本 大介 , 小野 哲雄. 無段階調整インタフェースのためのハンドジェスチャによる操作手法の探索的研究. 情報処理学会 研究報告ヒューマンコンピュータインタラクション（HCI）, 2022-HCI-197(25), 1-8, 2188-8760, 2022年3月.ロング採録（acceptance rate: 12.5%）.',
         'doi':
             'https://ipsj.ixsq.nii.ac.jp/ej/?action=repository_uri&item_id=217445'
       },
