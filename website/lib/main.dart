@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'pages/project_page.dart';
 import 'dart:math';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// コードがわかりやすいように各要素の解説を追加する
 
 void main() {
   runApp(MyApp());
@@ -16,10 +17,12 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
+// アプリのルート
 class _MyAppState extends State<MyApp> {
-  Locale _locale = Locale('en');
+  Locale _locale = Locale('en'); // デフォルトの言語を英語に設定
 
   void _changeLanguage(Locale locale) {
+    // 言語を変更する関数
     setState(() {
       _locale = locale;
     });
@@ -27,6 +30,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    // アプリのビルド
     return MaterialApp(
       locale: _locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -37,19 +41,22 @@ class _MyAppState extends State<MyApp> {
       ),
       initialRoute: '/',
       routes: {
+        // ルーティング
         '/': (context) => PortfolioPage(
               changeLanguage: _changeLanguage,
               content: HomeContent(),
             ),
         '/project1': (context) => Project1Page(),
-        // '/project2': (context) => Project2Page(),
-        // '/project3': (context) => Project3Page(),
+        '/project2': (context) => Project2Page(),
+        '/project3': (context) => Project3Page(),
       },
     );
   }
 }
 
+//
 class PortfolioPage extends StatefulWidget {
+  // ポートフォリオページ
   final void Function(Locale) changeLanguage;
   final Widget content;
 
@@ -65,6 +72,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void _scrollToSection(int index) {
+    // セクションにスクロールする関数
     final context = _sectionKeys[index].currentContext;
     if (context != null) {
       Scrollable.ensureVisible(
@@ -81,6 +89,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
 
   Widget _buildContent() {
     return ListView(
+      // メインのコンテンツ
       controller: _scrollController,
       children: [
         Section(
@@ -110,6 +119,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
   // メインのナビゲーション
   Container mainBuilder() {
     return Container(
+      // ナビゲーションのコンテナ
       padding: EdgeInsets.all(16),
       width: MediaQuery.of(context).size.width * 0.25,
       child: Column(
@@ -118,6 +128,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
+            // アイコン
             width: MediaQuery.of(context).size.width * 0.15,
             height: MediaQuery.of(context).size.width * 0.15,
             // 画像は円形にする
@@ -126,9 +137,14 @@ class _PortfolioPageState extends State<PortfolioPage> {
             ),
           ),
           SizedBox(height: 20),
-          NavLink(title: 'Home', onTap: () => _scrollToSection(0)),
-          NavLink(title: 'Projects', onTap: () => _scrollToSection(1)),
-          NavLink(title: 'Publications', onTap: () => _scrollToSection(2)),
+          NavLink(
+              title: 'Home', onTap: () => _scrollToSection(0)), // ナビゲーションリンク
+          NavLink(
+              title: 'Projects',
+              onTap: () => _scrollToSection(1)), // ナビゲーションリンク
+          NavLink(
+              title: 'Publications',
+              onTap: () => _scrollToSection(2)), // ナビゲーションリンク
           // 横向きに連絡先のアイコンを表示, アイコンはクリックするとリンク先に飛ぶ
           Row(
             children: [
@@ -161,6 +177,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
   }
 
   Widget _buildDrawer() {
+    // ドロワー
     return Drawer(
       child: ListView(
         children: [
@@ -242,6 +259,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
 
   @override
   Widget build(BuildContext context) {
+    // ポートフォリオページのビルド
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -309,6 +327,7 @@ class Section extends StatelessWidget {
 }
 
 class NavLink extends StatelessWidget {
+  // ナビゲーションリンク
   final String title;
   final VoidCallback onTap;
   final double fontsize;
@@ -341,6 +360,7 @@ class NavLink extends StatelessWidget {
 }
 
 class HomeContent extends StatelessWidget {
+  // ホームコンテンツ
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -356,6 +376,7 @@ class HomeContent extends StatelessWidget {
 }
 
 class PublicationContent extends StatelessWidget {
+  // 出版物コンテンツ
   @override
   Widget build(BuildContext context) {
     return Text('Publications content goes here');
@@ -419,17 +440,19 @@ class ProjectContent extends StatelessWidget {
     return Column(
       children: projects
           .map(
-            (project) => Column(
-              children: [
-                GestureDetector(
-                  onTap: () => Navigator.pushNamed(context, project['route']),
-                  child: Text(
-                    project['title'],
-                    style: TextStyle(fontSize: 20),
+            (project) => Padding(
+              padding: EdgeInsets.symmetric(vertical: 8.0),
+              child: InkWell(
+                onTap: () => Navigator.pushNamed(context, project['route']),
+                child: Text(
+                  project['title'],
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Theme.of(context).primaryColor,
+                    decoration: TextDecoration.underline,
                   ),
                 ),
-                SizedBox(height: 20),
-              ],
+              ),
             ),
           )
           .toList(),
@@ -461,3 +484,48 @@ class Project1Page extends StatelessWidget {
 }
 
 // Project2Page, Project3Page も同様に作成
+class Project2Page extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    return PortfolioPage(
+      changeLanguage: (Locale locale) {
+        // 言語変更のロジックをここに実装
+      },
+      content: Column(
+        children: [
+          Text(
+            localizations.p1Title,
+            style: Theme.of(context).textTheme.headline4,
+          ),
+          Image.asset(localizations.p1Image),
+          Text(localizations.p1Description),
+          // YouTube リンクや出版物などの他の情報を追加
+        ],
+      ),
+    );
+  }
+}
+
+class Project3Page extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    return PortfolioPage(
+      changeLanguage: (Locale locale) {
+        // 言語変更のロジックをここに実装
+      },
+      content: Column(
+        children: [
+          Text(
+            localizations.p1Title,
+            style: Theme.of(context).textTheme.headline4,
+          ),
+          Image.asset(localizations.p1Image),
+          Text(localizations.p1Description),
+          // YouTube リンクや出版物などの他の情報を追加
+        ],
+      ),
+    );
+  }
+}
