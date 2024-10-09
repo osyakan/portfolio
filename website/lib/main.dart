@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'responsive_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'pages/project_page.dart';
+import 'pages/projects.dart';
 import 'dart:math';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'pages/params.dart';
 
 void main() {
   runApp(MyApp());
@@ -31,19 +32,25 @@ class _MyAppState extends State<MyApp> {
       locale: _locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      title: 'Kan Kusakabe',
+      title: _locale.languageCode == 'ja' ? '日下部 完' : 'Kan Kusakabe',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: 'Noto Sans JP',
       ),
-      home: PortfolioPage(changeLanguage: _changeLanguage),
+      routes: {
+        '/ringsense': (context) => ProjectRingsense(locale: _locale),
+        '/game2x': (context) => ProjectGame2X(locale: _locale),
+      },
+      home: PortfolioPage(changeLanguage: _changeLanguage, locale: _locale),
     );
   }
 }
 
 class PortfolioPage extends StatefulWidget {
   final void Function(Locale) changeLanguage;
+  final Locale locale;
 
-  PortfolioPage({required this.changeLanguage});
+  PortfolioPage({required this.changeLanguage, required this.locale});
 
   @override
   _PortfolioPageState createState() => _PortfolioPageState();
@@ -69,36 +76,36 @@ class _PortfolioPageState extends State<PortfolioPage> {
     }
   }
 
-  Widget _buildContent() {
+  Widget _buildContent(Locale locale) {
     return ListView(
       controller: _scrollController,
       children: [
         Section(
             key: _sectionKeys[0],
-            title: AppLocalizations.of(context)!.header,
+            title: locale.languageCode == 'ja' ? 'ホーム' : 'Home',
             content: HomeContent()),
         Section(
             key: _sectionKeys[1],
-            title: AppLocalizations.of(context)!.project,
+            title: locale.languageCode == 'ja' ? 'プロジェクト' : 'Project',
             content: ProjectContent()),
         Section(
             key: _sectionKeys[2],
-            title: AppLocalizations.of(context)!.publication,
+            title: locale.languageCode == 'ja' ? '出版物' : 'Publication',
             content: PublicationContent()),
       ],
     );
   }
 
-  Widget _buildNavigation() {
+  Widget _buildNavigation(Locale locale) {
     return ResponsiveWidget(
-      largeScreen: mainBuilder(),
-      mediumScreen: mainBuilder(),
+      largeScreen: mainBuilder(locale),
+      mediumScreen: mainBuilder(locale),
       smallScreen: SizedBox.shrink(),
     );
   }
 
   // メインのナビゲーション
-  Container mainBuilder() {
+  Container mainBuilder(Locale locale) {
     return Container(
       padding: EdgeInsets.all(16),
       width: MediaQuery.of(context).size.width * 0.25,
@@ -116,9 +123,15 @@ class _PortfolioPageState extends State<PortfolioPage> {
             ),
           ),
           SizedBox(height: 20),
-          NavLink(title: 'Home', onTap: () => _scrollToSection(0)),
-          NavLink(title: 'Projects', onTap: () => _scrollToSection(1)),
-          NavLink(title: 'Publications', onTap: () => _scrollToSection(2)),
+          NavLink(
+              title: locale.languageCode == 'ja' ? 'ホーム' : 'Home',
+              onTap: () => _scrollToSection(0)),
+          NavLink(
+              title: locale.languageCode == 'ja' ? 'プロジェクト' : 'Project',
+              onTap: () => _scrollToSection(1)),
+          NavLink(
+              title: locale.languageCode == 'ja' ? '出版物' : 'Publication',
+              onTap: () => _scrollToSection(2)),
           // 横向きに連絡先のアイコンを表示, アイコンはクリックするとリンク先に飛ぶ
           Row(
             children: [
@@ -232,6 +245,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context)!;
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -244,7 +258,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
             }),
             child: Text('EN', style: TextStyle(color: Colors.black)),
           ),
-          Text("/"),
+          SelectableText("/"),
           TextButton(
             onPressed: () => setState(() {
               widget.changeLanguage(Locale('ja'));
@@ -263,8 +277,9 @@ class _PortfolioPageState extends State<PortfolioPage> {
       drawer: ResponsiveWidget.isSmallScreen(context) ? _buildDrawer() : null,
       body: Row(
         children: [
-          if (!ResponsiveWidget.isSmallScreen(context)) _buildNavigation(),
-          Expanded(child: _buildContent()),
+          if (!ResponsiveWidget.isSmallScreen(context))
+            _buildNavigation(locale),
+          Expanded(child: _buildContent(locale)),
         ],
       ),
     );
@@ -289,7 +304,7 @@ class Section extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: Theme.of(context).textTheme.headline4),
+          SelectableText(title, style: Theme.of(context).textTheme.headline4),
           SizedBox(height: 16),
           content,
         ],
@@ -333,12 +348,30 @@ class NavLink extends StatelessWidget {
 class HomeContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context)!;
+    final text = locale.languageCode == 'ja'
+        ? """
+こんにちは、私は北海道大学の博士課程学生、日本語名は日下部寛です。
+私はヒューマンコンピュータインタラクション（HCI）とユビキタスコンピューティングに興味があります。
+現在、RingSenseというプロジェクトに取り組んでおり、これはユーザーの指の位置を検出できるウェアラブルデバイスです。
+また、HCIの応用を医療分野にも興味があります。
+"""
+        : '''
+hello, I am Kan Kusakabe, a Ph.D. student at Hokkaido University. 
+I am interested in Human-Computer Interaction (HCI) and Ubiquitous Computing. 
+I am currently working on a project called RingSense, which is a wearable device that can detect the user's finger position. 
+I am also interested in the application of HCI to the field of healthcare. 
+I am currently working on a project called RingSense, which is a wearable device that can detect the user's finger position. 
+I am also interested in the application of HCI to the field of healthcare.
+''';
     return Column(
       children: [
         SizedBox(height: 20),
-        Text(
-          AppLocalizations.of(context)!.selfIntrodution,
-          style: TextStyle(fontSize: 18),
+        SelectableText(
+          text,
+          style: TextStyle(
+              fontSize:
+                  min(max(MediaQuery.of(context).size.width * 0.024, 20), 17)),
         ),
       ],
     );
@@ -346,51 +379,20 @@ class HomeContent extends StatelessWidget {
 }
 
 class ProjectContent extends StatelessWidget {
-  // titleとimageを横に並べたプロジェクトを縦に並べる
   @override
   Widget build(BuildContext context) {
     // ローカライゼーションのインスタンスを取得
     final localizations = AppLocalizations.of(context)!;
-    // Listでプロジェクトの内容を記述（title, image, youtubelink, youtubelink_sub, description, doi, publication1, publication2）
     final List<Map<String, dynamic>> projects = [
       {
-        'title': localizations.p1Title,
-        'image': localizations.p1Image,
-        'youtubelink': localizations.p1Youtubelink,
-        'youtubelink_sub': localizations.p1Youtubelink_sub,
-        'description': localizations.p1Description,
-        'doi1': localizations.p1Doi1,
-        'doi2': localizations.p1Doi2,
-        'doi3': localizations.p1Doi3,
-        'publication1': localizations.p1Publication1,
-        'publication2': localizations.p1Publication2,
-        'publication3': localizations.p1Publication3,
+        'title': 'RingSense',
+        'path': '/ringsense',
+        'image': 'image/ringsense.png',
       },
       {
-        'title': localizations.p2Title,
-        'image': localizations.p2Image,
-        'youtubelink': localizations.p2Youtubelink,
-        'youtubelink_sub': localizations.p2Youtubelink_sub,
-        'description': localizations.p2Description,
-        'doi1': localizations.p2Doi1,
-        'doi2': localizations.p2Doi2,
-        'doi3': localizations.p2Doi3,
-        'publication1': localizations.p2Publication1,
-        'publication2': localizations.p2Publication2,
-        'publication3': localizations.p2Publication3,
-      },
-      {
-        'title': localizations.p3Title,
-        'image': localizations.p3Image,
-        'youtubelink': localizations.p3Youtubelink,
-        'youtubelink_sub': localizations.p3Youtubelink_sub,
-        'description': localizations.p3Description,
-        'doi1': localizations.p3Doi1,
-        'doi2': localizations.p3Doi2,
-        'doi3': localizations.p3Doi3,
-        'publication1': localizations.p3Publication1,
-        'publication2': localizations.p3Publication2,
-        'publication3': localizations.p3Publication3,
+        'title': 'Game-2-X',
+        'path': '/game2x',
+        'image': 'image/game2X.png',
       },
     ];
     return Column(
@@ -400,27 +402,15 @@ class ProjectContent extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => ProjectPage(
-                          title: project['title'],
-                          image: project['image'],
-                          youtubelink: project['youtubelink'],
-                          youtubelink_sub: project['youtubelink_sub'],
-                          description: project['description'],
-                          doi1: project['doi1'],
-                          doi2: project['doi2'],
-                          doi3: project['doi3'],
-                          publication1: project['publication1'],
-                          publication2: project['publication2'],
-                          publication3: project['publication3'],
-                        ),
-                      ),
+                    Navigator.of(context).pushNamed(
+                      project['path'],
+                      arguments: {
+                        'locale': localizations,
+                      },
                     );
                   },
                   child: Row(
                     children: [
-                      // もしscreenが小さい場合は画像を表示しない
                       if (!ResponsiveWidget.isSmallScreen(context))
                         Container(
                           width: 200,
@@ -456,6 +446,94 @@ class ProjectContent extends StatelessWidget {
 class PublicationContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Text('Publications content goes here');
+    final locale = Localizations.localeOf(context)!;
+    final params = Params(context);
+    final fontsize = params.getFontSize();
+    final fixwidth = params.getFixwidth();
+    final padHeight = params.getPadHeight();
+    // 査読付き国際会議 **********************************************************************
+    final publications_peer = [
+      {
+        'publication':
+            '日下部完, 阿部優樹, 坂本大介, 小野哲雄. 第31回インタラクティブシステムとソフトウェアに関するワークショップ（WISS 2023）. 日本ソフトウェア科学会, 1-A03, 2023年11月.',
+        'doi': 'https://www.wiss.org/WISS2023Proceedings/data/1-A03.pdf'
+      },
+    ];
+    // 査読なし国際会議 **********************************************************************
+    final publications_non_peer = [];
+    // 査読付き国内会議 **********************************************************************
+    final publications_jp_peer = [
+      {
+        'publication':
+            '日下部完, 阿部優樹, 坂本大介, 小野哲雄. 第31回インタラクティブシステムとソフトウェアに関するワークショップ（WISS 2023）. 日本ソフトウェア科学会, 1-A03, 2023年11月.',
+        'doi': 'https://www.wiss.org/WISS2023Proceedings/data/1-A03.pdf'
+      },
+    ];
+    // 査読なし国内会議 **********************************************************************
+    final publications_jp_non_peer = [
+      {
+        'publication':
+            '日下部 完 , 崔 明根 , 坂本 大介 , 小野 哲雄. 無段階調整インタフェースのためのハンドジェスチャによる操作手法の探索的研究. 情報処理学会 研究報告ヒューマンコンピュータインタラクション（HCI）, 2022-HCI-197(25), 1-8, 2188-8760, 2022年3月.',
+        'doi':
+            'https://ipsj.ixsq.nii.ac.jp/ej/?action=repository_uri&item_id=217445'
+      },
+    ];
+
+    return Column(
+      // 左寄せ
+      crossAxisAlignment: CrossAxisAlignment.start,
+
+      children: [
+        // 査読付き国際会議
+        if (publications_peer.isNotEmpty) ...[
+          SelectableText(
+            locale.languageCode == 'ja'
+                ? '査読付き国際会議'
+                : 'Peer-reviewed international conferences',
+            style: TextStyle(fontSize: fontsize),
+          ),
+          SizedBox(height: padHeight / 3),
+          params.getPublications(publications_peer, fixwidth, padHeight),
+          SizedBox(height: padHeight),
+        ],
+
+        // 査読なし国際会議
+        if (publications_non_peer.isNotEmpty) ...[
+          SelectableText(
+            locale.languageCode == 'ja'
+                ? '査読なし国際会議'
+                : 'Non-peer-reviewed international conferences',
+            style: TextStyle(fontSize: fontsize),
+          ),
+          SizedBox(height: padHeight / 3),
+          params.getPublications(publications_non_peer, fixwidth, padHeight),
+        ],
+
+        // 査読付き国内会議
+        if (publications_jp_peer.isNotEmpty) ...[
+          SelectableText(
+            locale.languageCode == 'ja'
+                ? '査読付き国内会議'
+                : 'Peer-reviewed domestic conferences',
+            style: TextStyle(fontSize: fontsize),
+          ),
+          SizedBox(height: padHeight / 3),
+          params.getPublications(publications_jp_peer, fixwidth, padHeight),
+          SizedBox(height: padHeight),
+        ],
+
+        // 査読なし国内会議
+        if (publications_jp_non_peer.isNotEmpty) ...[
+          SelectableText(
+            locale.languageCode == 'ja'
+                ? '査読なし国内会議'
+                : 'Non-peer-reviewed domestic conferences',
+            style: TextStyle(fontSize: fontsize),
+          ),
+          SizedBox(height: padHeight / 3),
+          params.getPublications(publications_jp_non_peer, fixwidth, padHeight),
+        ],
+      ],
+    );
   }
 }
