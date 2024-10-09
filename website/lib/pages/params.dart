@@ -83,7 +83,7 @@ class Params {
                     ),
                   ),
                   InkWell(
-                    child: SelectableText(
+                    child: Text(
                       'DOI: ${publication['doi']}',
                       style: TextStyle(
                         color: Colors.blue,

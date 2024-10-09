@@ -1,4 +1,6 @@
 // reference: https://qiita.com/ampersand-dev/items/61ed134f871e7eab95ae
+// how to deploy: https://zenn.dev/r0227n/articles/flutter_web_deploy_github_pages
+// how to contain firebase analytics: https://qiita.com/nashitake/items/f0df28a460542279246e
 import 'package:flutter/material.dart';
 import 'responsive_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -7,6 +9,9 @@ import 'pages/projects.dart';
 import 'dart:math';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'pages/params.dart';
+// firebaseについて
+// import 'package:firebase_analytics/firebase_analytics.dart';
+// import 'package:firebase_analytics/observer.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,6 +24,10 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Locale _locale = Locale('en');
+  // Firebase Analytics
+  // final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  // final FirebaseAnalyticsObserver observer =
+  //     FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance);
 
   void _changeLanguage(Locale locale) {
     setState(() {
@@ -42,6 +51,10 @@ class _MyAppState extends State<MyApp> {
         '/game2x': (context) => ProjectGame2X(locale: _locale),
       },
       home: PortfolioPage(changeLanguage: _changeLanguage, locale: _locale),
+      // navigatorObservers: [
+      //   // Firebase Analytics
+      //   observer,
+      // ],
     );
   }
 }
