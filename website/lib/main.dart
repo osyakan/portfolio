@@ -35,7 +35,12 @@ class _MyAppState extends State<MyApp> {
       title: _locale.languageCode == 'ja' ? '日下部 完' : 'Kan Kusakabe',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        fontFamily: 'Noto Sans JP',
+        textTheme: TextTheme(
+          bodyLarge: TextStyle(
+              fontFamily: 'Helvetica', fontFamilyFallback: ['Hiragino Sans']),
+          bodyMedium: TextStyle(
+              fontFamily: 'Helvetica', fontFamilyFallback: ['Hiragino Sans']),
+        ),
       ),
       routes: {
         '/ringsense': (context) => ProjectRingsense(locale: _locale),
@@ -349,12 +354,13 @@ class HomeContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final locale = Localizations.localeOf(context)!;
-    final text = locale.languageCode == 'ja'
+    var text = locale.languageCode == 'ja'
         ? """
 こんにちは、私は北海道大学の博士課程学生、日本語名は日下部寛です。
 私はヒューマンコンピュータインタラクション（HCI）とユビキタスコンピューティングに興味があります。
 現在、RingSenseというプロジェクトに取り組んでおり、これはユーザーの指の位置を検出できるウェアラブルデバイスです。
 また、HCIの応用を医療分野にも興味があります。
+出版物
 """
         : '''
 hello, I am Kan Kusakabe, a Ph.D. student at Hokkaido University. 
@@ -364,6 +370,10 @@ I am also interested in the application of HCI to the field of healthcare.
 I am currently working on a project called RingSense, which is a wearable device that can detect the user's finger position. 
 I am also interested in the application of HCI to the field of healthcare.
 ''';
+    final String fontfamily =
+        Theme.of(context).textTheme.bodyText1!.fontFamily!;
+    // textの最後にfontfamilyを追加する
+    text += fontfamily;
     return Column(
       children: [
         SizedBox(height: 20),

@@ -86,13 +86,20 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Noto Sans JP
+    - family: Hiragino Sans
       fonts:
-        - asset: fonts/NotoSansJP-Regular.ttf
-        - asset: fonts/NotoSansJP-Bold.ttf
-        - asset: fonts/NotoSansJP-Medium.ttf
-        - asset: fonts/NotoSansJP-Black.ttf
-
+        - asset: fonts/hiraginosans-W0.ttc
+        - asset: fonts/hiraginosans-W1.ttc
+        - asset: fonts/hiraginosans-W2.ttc
+        - asset: fonts/hiraginosans-W3.ttc
+        - asset: fonts/hiraginosans-W4.ttc
+        - asset: fonts/hiraginosans-W5.ttc
+        - asset: fonts/hiraginosans-W6.ttc
+        - asset: fonts/hiraginosans-W7.ttc
+        - asset: fonts/hiraginosans-W8.ttc
+    - family: Helvetica
+      fonts: 
+        - asset: fonts/helvetica.ttc
         
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
