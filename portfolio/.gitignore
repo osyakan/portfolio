@@ -40,4 +40,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-node_modules/
+tmp/node_modules/
+portfolios/node_modules/
