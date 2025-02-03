@@ -42,3 +42,4 @@ next-env.d.ts
 
 tmp/node_modules/
 portfolios/node_modules/
+node_modules/
