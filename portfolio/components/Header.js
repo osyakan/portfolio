@@ -13,7 +13,7 @@ export default function Header() {
         <Link href="/ja" style={{ marginRight: "1rem" }}>
           日本語
         </Link>
-        <Link href="/">English</Link>
+        <Link href="/en">English</Link>
       </nav>
     </header>
   );

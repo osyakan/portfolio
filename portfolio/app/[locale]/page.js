@@ -13,7 +13,7 @@ import publicationEn from "../data/en/publication.json";
 
 export default function Home({ params }) {
   // Next.js の i18n 機能で渡される locale (なければ defaultLocale を利用)
-  const locale = params.locale;
+  const locale = params.locale || "ja";
 
   // locale に応じて適切な JSON を選択
   const aboutData = locale === "en" ? aboutEn : aboutJa;
@@ -22,7 +22,6 @@ export default function Home({ params }) {
 
   return (
     <div>
-      <p> {locale}</p>
       <section id="about">
         <About data={aboutData} />
       </section>
