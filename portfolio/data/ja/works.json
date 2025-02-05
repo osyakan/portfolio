@@ -1,0 +1,51 @@
+{
+  "title": "works",
+  "items": [
+    {
+      "title": "title1",
+      "abstract": "abstract1",
+      "description": "description1",
+      "image-path": "image-path1",
+      "video-path": "video-path1",
+      "publications": [
+        {
+          "title": "title1",
+          "authors": "authors1",
+          "conference": "conference1",
+          "year": "year1",
+          "link": "link1"
+        },
+        {
+          "title": "title2",
+          "authors": "authors2",
+          "conference": "conference2",
+          "year": "year2",
+          "link": "link2"
+        }
+      ]
+    },
+    {
+      "title": "title2",
+      "abstract": "abstract2",
+      "description": "description2",
+      "image-path": "image-path2",
+      "video-path": "video-path2",
+      "publications": [
+        {
+          "title": "title1",
+          "authors": "authors1",
+          "conference": "conference1",
+          "year": "year1",
+          "link": "link1"
+        },
+        {
+          "title": "title2",
+          "authors": "authors2",
+          "conference": "conference2",
+          "year": "year2",
+          "link": "link2"
+        }
+      ]
+    }
+  ]
+}
