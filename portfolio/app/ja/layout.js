@@ -22,13 +22,19 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="ja">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <div className="flex flex-col min-h-screen">
-          <Header common={common} />
-          <main className="flex-1 mt-[3rem] sm:mt-[6rem]">{children}</main>
-          <Footer />
+      <body className={`antialiased`}>
+        <div className="flex flex-col ">
+          <div className="flex flex-col lg:flex-row">
+            <aside className="lg:w-2/5 bg-white">
+              <Header common={common} />
+            </aside>
+            <div className="flex-row py-[2rem] lg:py-[0rem]">
+              <main className="flex-1 mt-[4rem]  sm:mt-[6rem] lg:mt-[4.5rem]">
+                {children}
+              </main>
+              <Footer />
+            </div>
+          </div>
         </div>
       </body>
     </html>

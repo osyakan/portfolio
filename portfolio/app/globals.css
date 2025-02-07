@@ -26,8 +26,8 @@ html {
 }
 
 .header-link-style {
-  @apply mr-8 font-bold;
-  font-size: 1.2rem;
+  @apply mr-8 font-bold text-lg lg:text-2xl;
+  /* font-size: 1.2rem; */
 }
 
 .header-link-style:hover {

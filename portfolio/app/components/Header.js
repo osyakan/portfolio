@@ -4,6 +4,7 @@
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 export default function Header({ common }) {
   const [mounted, setMounted] = useState(false);
@@ -44,11 +45,11 @@ export default function Header({ common }) {
 
   return (
     <header
-      className={`fixed all-content w-full ${
+      className={`fixed lg:static all-content w-full ${
         isOpen ? "bg-white" : "bg-transparent"
-      } sm:bg-white`}
+      } sm:bg-white lg:bg-blue-50 lg:h-full`}
     >
-      <div className="flex justify-end sm:justify-start items-center ">
+      <div className="flex flex-row lg:flex-col justify-end sm:justify-start items-center lg:gap-[2rem]  lg:py-[2rem] lg:sticky lg:top-0">
         {/* スマホの場合: ハンバーガーメニューのみ表示 */}
         {isMobile ? (
           <button
@@ -60,17 +61,24 @@ export default function Header({ common }) {
         ) : (
           // PCの場合: 名前と所属を表示
           <div>
-            <h1 className="text-xl font-semibold">
+            <Image
+              src="/image/sample.png"
+              alt="my face image"
+              width={200}
+              height={200}
+              className="hidden lg:block rounded-full"
+            />
+            <h1 className="text-xl lg:text-2xl font-semibold">
               <Link href="/">{common.name}</Link>
             </h1>
-            <p className="text-sm">{common.affiliation}</p>
+            <p className="text-sm lg:text-lg">{common.affiliation}</p>
           </div>
         )}
 
         {/* PCの場合: 通常のナビゲーション */}
         {!isMobile && (
           <>
-            <nav className="gap-6 text-lg px-[1.5rem]">
+            <nav className="gap-6 lg:gap-12 px-[1.5rem] flex flex-row lg:flex-col lg:all-content">
               <Link href="#profile" className="header-link-style">
                 {common.home_title}
               </Link>
