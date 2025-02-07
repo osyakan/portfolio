@@ -41,12 +41,19 @@ html {
 /* Use Tailwind utilities as intended in the comment:
    max-w-6xl mx-auto px-4 py-4 */
 .all-content {
-  @apply max-w-6xl mx-auto px-[3rem] py-[2rem];
+  @apply mx-auto px-[5rem] py-[2rem];
 }
 
 .common-section {
-  @apply px-[3rem];
-  @apply mt-[3rem];
+  @apply px-[5rem] mt-[5rem];
+}
+
+@screen sm {
+  .all-content {
+    /* @apply mx-auto px-[5rem] py-[2rem]; */
+  }
+  .common-section {
+  }
 }
 
 .common-section h2 {

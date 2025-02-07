@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useTranslation } from "next-i18next";
 
-export default function Header() {
+export default function Header(common) {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
@@ -41,7 +41,7 @@ export default function Header() {
             <h1 className="text-xl font-semibold">
               <Link href="/">{t("name")}</Link>
             </h1>
-            <p className="text-sm">Hokkaido University</p>
+            <p className="text-sm">{common.affiliation}</p>
           </div>
         </div>
       </header>
@@ -59,7 +59,7 @@ export default function Header() {
         {isMobile ? (
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="text-xl p-3 px-4 border rounded-md mr-6 bg-white"
+            className="text-xl px-4 py-3 border rounded-md mr-6 bg-white"
           >
             ☰
           </button>
@@ -67,24 +67,24 @@ export default function Header() {
           // PCの場合: 名前と所属を表示
           <div>
             <h1 className="text-xl font-semibold">
-              <Link href="/">Kan Kusakabe</Link>
+              <Link href="/">{common.name}</Link>
             </h1>
-            <p className="text-sm">Hokkaido University</p>
+            <p className="text-sm">{common.affiliation}</p>
           </div>
         )}
 
         {/* PCの場合: 通常のナビゲーション */}
         {!isMobile && (
           <>
-            <nav className="flex gap-6 ml-[5rem] text-lg">
+            <nav className="flex gap-6 text-lg">
               <Link href="#profile" className="header-link-style">
-                Profile
+                {common.home_title}
               </Link>
               <Link href="#works" className="header-link-style">
-                Works
+                {common.project_title}
               </Link>
               <Link href="#publications" className="header-link-style">
-                Publications
+                {common.publication_title}
               </Link>
             </nav>
 
