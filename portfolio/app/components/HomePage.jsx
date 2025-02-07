@@ -7,16 +7,9 @@ export default function HomePage({ common, projects, samplePublications }) {
       {/* About me */}
       <section id="profile" className="common-section border-b">
         <h2>{common.home_title}</h2>
-        <h3>{common.name}</h3>
-        <p>{common.aboutText}</p>
+        {/* <h3>{common.name}</h3> */}
+        <p>{common.introduction}</p>
         <br />
-        <h3>{common.name}</h3>
-        <ul className="list-disc pl-6 text-lg">
-          <li>{common.name}</li>
-        </ul>
-        <br />
-        <h3 className="text-2xl font-semibold">{common.name}</h3>
-        <p className="text-lg mt-2">{common.name}</p>
         <div className="mb-8" />
       </section>
       {/* Works */}
@@ -30,7 +23,7 @@ export default function HomePage({ common, projects, samplePublications }) {
           {projects?.map((work, index) => (
             <div
               key={work.id || index}
-              className="hover:bg-blue-700 border-0 p-4"
+              className="border-0 p-4 transform ease-out duration-300 hover:scale-105"
             >
               <Link href={`/works/${work.id}`} className="flex gap-4">
                 <Image

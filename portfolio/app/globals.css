@@ -25,10 +25,6 @@ html {
   scroll-behavior: smooth;
 }
 
-.container-work:hover {
-  @apply transform hover:scale-105;
-}
-
 .header-link-style {
   @apply mr-8 font-bold;
   font-size: 1.2rem;
@@ -57,11 +53,11 @@ html {
 }
 
 .common-section h2 {
-  @apply text-4xl font-bold mb-6;
+  @apply text-2xl font-bold mb-6;
 }
 
 .common-section h3 {
-  @apply text-2xl font-semibold mb-4;
+  @apply text-xl font-semibold mb-4;
 }
 
 .common-section p {

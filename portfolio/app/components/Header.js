@@ -4,14 +4,12 @@
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { useTranslation } from "next-i18next";
 
-export default function Header(common) {
+export default function Header({ common }) {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const { t } = useTranslation("main");
 
   // ダークモードの初期化
   useEffect(() => {
@@ -31,15 +29,11 @@ export default function Header(common) {
   // マウントされるまでは初期状態を返す
   if (!mounted) {
     return (
-      <header
-        className={`fixed all-content w-full ${
-          isOpen ? "bg-white" : "bg-transparent"
-        } sm:bg-white`}
-      >
+      <header className="fixed all-content w-full bg-white">
         <div className="flex justify-start items-center px-10">
           <div>
-            <h1 className="text-xl font-semibold">
-              <Link href="/">{t("name")}</Link>
+            <h1 className="font-semibold">
+              <Link href="/">what</Link>
             </h1>
             <p className="text-sm">{common.affiliation}</p>
           </div>
@@ -76,7 +70,7 @@ export default function Header(common) {
         {/* PCの場合: 通常のナビゲーション */}
         {!isMobile && (
           <>
-            <nav className="flex gap-6 text-lg">
+            <nav className="gap-6 text-lg px-[1.5rem]">
               <Link href="#profile" className="header-link-style">
                 {common.home_title}
               </Link>
@@ -89,13 +83,13 @@ export default function Header(common) {
             </nav>
 
             {/* 英語/日本語切り替えをLinkコンポーネントで実装 */}
-            <div className="flex gap-2 ml-auto justify-end">
+            <div className="flex gap-[0.5rem] justify-end">
               <Link href="/" locale="en">
-                English
+                en
               </Link>
               <span>/</span>
-              <Link href="/" locale="ja">
-                日本語
+              <Link href="/ja" locale="ja">
+                ja
               </Link>
             </div>
           </>

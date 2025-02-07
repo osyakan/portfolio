@@ -1,19 +1,19 @@
 [
   {
     "id": "project1",
-    "thumbnail": "/images/project1.jpg",
+    "thumbnail": "/image/sample.png",
     "title": "Project One",
     "abstract": "This is a brief description of Project One."
   },
   {
     "id": "project2",
-    "thumbnail": "/images/project2.jpg",
+    "thumbnail": "/image/sample.png",
     "title": "Project Two",
     "abstract": "This is a brief description of Project Two."
   },
   {
     "id": "project3",
-    "thumbnail": "/images/project3.jpg",
+    "thumbnail": "/image/sample.png",
     "title": "Project Three",
     "abstract": "This is a brief description of Project Three."
   }
