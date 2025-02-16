@@ -14,10 +14,7 @@ export default function HomePage({ common, projects, samplePublications }) {
       </section>
       {/* Works */}
       {/* <section id="works" className="common-section border-b "> */}
-      <section
-        id="works"
-        className="common-section border-b  mt-[3rem] sm:mt-[6rem]"
-      >
+      <section id="works" className="common-section border-b">
         <h2>{common.project_title}</h2>
         <div className="grid grid-cols-1 [&>*]:border-0">
           {projects?.map((work, index) => (

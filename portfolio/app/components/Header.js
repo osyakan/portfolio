@@ -30,7 +30,7 @@ export default function Header({ common }) {
   // マウントされるまでは初期状態を返す
   if (!mounted) {
     return (
-      <header className="fixed all-content w-full bg-white">
+      <header className="all-content w-full bg-white">
         <div className="flex justify-start items-center px-10">
           <div>
             <h1 className="font-semibold">
@@ -45,16 +45,17 @@ export default function Header({ common }) {
 
   return (
     <header
-      className={`fixed lg:static all-content w-full ${
+      style={{ writingMode: "horizontal-tb" }}
+      className={`all-content w-full fixed lg:relative z-50 ${
         isOpen ? "bg-white" : "bg-transparent"
       } sm:bg-white lg:bg-blue-50 lg:h-full`}
     >
-      <div className="flex flex-row lg:flex-col justify-end sm:justify-start items-center lg:gap-[2rem]  lg:py-[2rem] lg:sticky lg:top-0">
+      <div className="flex flex-row lg:flex-col justify-end sm:justify-start items-center lg:gap-[2rem]  lg:py-[2rem] lg:sticky lg:top-10 lg:mt-[2rem]">
         {/* スマホの場合: ハンバーガーメニューのみ表示 */}
         {isMobile ? (
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="text-xl px-4 py-3 border rounded-md mr-6 bg-white"
+            className="text-xl px-4 py-3 border rounded-md bg-white"
           >
             ☰
           </button>
@@ -68,7 +69,7 @@ export default function Header({ common }) {
               height={200}
               className="hidden lg:block rounded-full"
             />
-            <h1 className="text-lg lg:text-2xl font-semibold">
+            <h1 className="text-lg lg:text-2xl font-semibold mt-[1rem]">
               <Link href="/">{common.name}</Link>
             </h1>
             <p className="text-sm lg:text-lg">{common.affiliation}</p>
@@ -77,8 +78,8 @@ export default function Header({ common }) {
 
         {/* PCの場合: 通常のナビゲーション */}
         {!isMobile && (
-          <>
-            <nav className="lg:gap-12 px-[1.5rem] flex flex-row lg:flex-col lg:all-content">
+          <div className="flex flex-row lg:flex-col items-center ml-auto lg:gap-[5rem] lg:mt-[2rem]">
+            <nav className="lg:gap-[2.3rem] flex flex-row lg:flex-col">
               <Link href="#profile" className="header-link-style">
                 {common.home_title}
               </Link>
@@ -92,21 +93,17 @@ export default function Header({ common }) {
 
             {/* 英語/日本語切り替えをLinkコンポーネントで実装 */}
             <div className="flex gap-[0.5rem] justify-end">
-              <Link href="/" locale="en">
-                en
-              </Link>
+              <Link href="/">en</Link>
               <span>/</span>
-              <Link href="/ja" locale="ja">
-                ja
-              </Link>
+              <Link href="/ja">ja</Link>
             </div>
-          </>
+          </div>
         )}
       </div>
 
       {/* スマホメニュー (開閉可能) */}
       {isMobile && isOpen && (
-        <nav className="flex flex-col gap-4 mt-2 p-4 border-t">
+        <nav className="flex flex-col gap-4 mt-1 p-4 border-t">
           {/* 折りたたまれる名前と所属 */}
           <div className="mb-4">
             <h1 className="text-xl font-semibold">

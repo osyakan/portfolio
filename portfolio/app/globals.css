@@ -20,7 +20,7 @@ html {
 
 .header-link-style {
   @apply mr-8 font-bold text-lg lg:text-2xl;
-  /* font-size: 1.2rem; */
+  word-break: keep-all;
 }
 
 .header-link-style:hover {
@@ -31,6 +31,12 @@ html {
    max-w-6xl mx-auto px-4 py-4 */
 .all-content {
   @apply mx-auto px-[5rem] py-[2rem];
+}
+
+/* Header内のテキストに対して改行の挙動を変更 */
+header h1,
+header p {
+  word-break: keep-all;
 }
 
 .common-section {
