@@ -10,7 +10,7 @@ export default function ProjectPage({ params, projects, commons }) {
   }
 
   return (
-    <div className="all-content">
+    <div className="all-content h-screen">
       <h1 className="text-2xl font-bold">{project.title}</h1>
       <p className="mt-2">{project.abstract}</p>
 

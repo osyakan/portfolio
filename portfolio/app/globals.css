@@ -8,13 +8,6 @@
   --foreground: #0a0a0a;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #ffffff;
-    --foreground: #0a0a0a;
-  }
-}
-
 body {
   color: var(--foreground);
   background: var(--background);
@@ -42,6 +35,7 @@ html {
 
 .common-section {
   @apply px-[5rem] mt-[5rem];
+  /* width: 90%; */
 }
 
 @screen sm {

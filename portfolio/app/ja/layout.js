@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
               <main className="flex-1 mt-[4rem]  sm:mt-[6rem] lg:mt-[4.5rem]">
                 {children}
               </main>
-              <Footer />
+              {/* <Footer /> */}
             </div>
           </div>
         </div>

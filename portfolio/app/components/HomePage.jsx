@@ -18,7 +18,7 @@ export default function HomePage({ common, projects, samplePublications }) {
         id="works"
         className="common-section border-b  mt-[3rem] sm:mt-[6rem]"
       >
-        <h2>Works</h2>
+        <h2>{common.project_title}</h2>
         <div className="grid grid-cols-1 [&>*]:border-0">
           {projects?.map((work, index) => (
             <div
@@ -47,7 +47,7 @@ export default function HomePage({ common, projects, samplePublications }) {
       </section>
       {/* Publications */}
       <section id="publications" className="common-section">
-        <h2>Publications</h2>
+        <h2>{common.publication_title}</h2>
         <div className="space-y-2">
           {samplePublications.map((publications, index) => (
             <div

@@ -1,3 +1,4 @@
+// app/layout.js
 import { Geist, Geist_Mono } from "next/font/google";
 import "@/app/globals.css";
 import Header from "@/app/components/Header";
@@ -23,16 +24,16 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`antialiased`}>
-        <div className="flex flex-col ">
+        <div className="flex flex-col">
           <div className="flex flex-col lg:flex-row">
-            <aside className="lg:w-2/5 bg-white">
+            <aside className="lg:w-3/5 bg-white">
               <Header common={common} />
             </aside>
             <div className="flex-row py-[2rem] lg:py-[0rem]">
-              <main className="flex-1 mt-[4rem]  sm:mt-[6rem] lg:mt-[4.5rem]">
+              <main className="flex-1 mt-[5rem]  sm:mt-[6rem] lg:mt-[4.5rem]">
                 {children}
               </main>
-              <Footer />
+              {/* <Footer /> */}
             </div>
           </div>
         </div>

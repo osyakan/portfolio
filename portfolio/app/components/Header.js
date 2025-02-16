@@ -68,7 +68,7 @@ export default function Header({ common }) {
               height={200}
               className="hidden lg:block rounded-full"
             />
-            <h1 className="text-xl lg:text-2xl font-semibold">
+            <h1 className="text-lg lg:text-2xl font-semibold">
               <Link href="/">{common.name}</Link>
             </h1>
             <p className="text-sm lg:text-lg">{common.affiliation}</p>
@@ -78,7 +78,7 @@ export default function Header({ common }) {
         {/* PCの場合: 通常のナビゲーション */}
         {!isMobile && (
           <>
-            <nav className="gap-6 lg:gap-12 px-[1.5rem] flex flex-row lg:flex-col lg:all-content">
+            <nav className="lg:gap-12 px-[1.5rem] flex flex-row lg:flex-col lg:all-content">
               <Link href="#profile" className="header-link-style">
                 {common.home_title}
               </Link>
@@ -106,36 +106,36 @@ export default function Header({ common }) {
 
       {/* スマホメニュー (開閉可能) */}
       {isMobile && isOpen && (
-        <nav className="flex flex-col gap-4 mt-2 p-4 border-t bg-white">
+        <nav className="flex flex-col gap-4 mt-2 p-4 border-t">
           {/* 折りたたまれる名前と所属 */}
           <div className="mb-4">
             <h1 className="text-xl font-semibold">
               <Link href="/" onClick={() => setIsOpen(false)}>
-                Kan Kusakabe
+                {common.name}
               </Link>
             </h1>
-            <p className="text-sm">Hokkaido University</p>
+            <p className="text-sm">{common.affiliation}</p>
           </div>
           <Link
             href="#profile"
             className="hover:underline"
             onClick={() => setIsOpen(false)}
           >
-            Profile
+            {common.home_title}
           </Link>
           <Link
             href="#works"
             className="hover:underline"
             onClick={() => setIsOpen(false)}
           >
-            Works
+            {common.project_title}
           </Link>
           <Link
             href="#publications"
             className="hover:underline"
             onClick={() => setIsOpen(false)}
           >
-            Publications
+            {common.publication_title}
           </Link>
         </nav>
       )}
